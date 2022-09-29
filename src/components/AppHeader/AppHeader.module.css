@@ -1,0 +1,26 @@
+.wrapper {
+    background: #1C1C21;
+}
+.container {
+    margin: 0 auto;
+    max-width: 1280px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+.left{
+    display: flex;
+    flex: 0 0 35%;
+    gap: 8px;
+}
+.center{
+    display: flex;
+    flex: 1;
+}
+.right{
+    display: flex;
+    flex: 0 0 30%;
+    justify-content: end;
+}
+

@@ -1,0 +1,24 @@
+.ingredient{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    max-width: 272px;
+    width: 100%;
+}
+.p{
+    text-align: center;
+}
+.price{
+    display: flex;
+    gap: 8px;
+    composes: p;
+}
+.ingredientType{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+}
