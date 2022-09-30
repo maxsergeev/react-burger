@@ -1,6 +1,6 @@
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {CSSProperties} from "react";
-import css from './BurgerIngredient.module.css';
+import css from './IngredientItem.module.css';
 import BreadImg from '../../../images/bun-01.png';
 import {IDataItem} from "../../../utils/interfaces";
 
@@ -12,7 +12,7 @@ interface IBurgerIngredientProps {
 
 
 
-class BurgerIngredient extends React.Component<IBurgerIngredientProps> {
+class IngredientItem extends React.Component<IBurgerIngredientProps> {
     constructor(props: IBurgerIngredientProps) {
         super(props);
     }
@@ -46,7 +46,7 @@ class BurgerIngredient extends React.Component<IBurgerIngredientProps> {
                         props.data.filter(item => item.type === props.type)
                             .map(item =>
                                 <li className={`${css.ingredient}`}>
-                                    <Counter  count={4} size={"default"}/>
+                                    <Counter  count={item.__v} size={"default"}/>
                                     <img src={item.image} alt={`${props.type}`}/>
                                     <p className={`${css.price} text text_type_digits-default`}>
                                         {item.price}
@@ -63,4 +63,4 @@ class BurgerIngredient extends React.Component<IBurgerIngredientProps> {
     }
 }
 
-export default BurgerIngredient;
+export default IngredientItem;

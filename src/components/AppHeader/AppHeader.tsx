@@ -7,8 +7,8 @@ import HeaderMenuItem from "./HeaderMenuItem/HeaderMenuItem";
 class AppHeader extends React.Component<{}> {
     render (){
         return (
-            <div className={`${css.wrapper}`}>
-                <div className={`${css.container} pt-4 pb-4`}>
+            <header className={`${css.wrapper}`}>
+                <nav className={`${css.container} pt-4 pb-4`}>
 
                     <div className={css.left}>
                         <HeaderMenuItem menuItemName={"Конструктор"} icon={<BurgerIcon type="secondary" />} />
@@ -23,8 +23,8 @@ class AppHeader extends React.Component<{}> {
                         <HeaderMenuItem menuItemName={"Личный кабинет"} icon={<ProfileIcon type="secondary" />} />
                     </div>
 
-                </div>
-            </div>
+                </nav>
+            </header>
 
         );
     }

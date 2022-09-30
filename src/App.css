@@ -2,12 +2,12 @@
   background: #131316;
 }
 
-.body{
+.content{
   max-width: 1280px;
   margin: 0 auto;
 }
 
-.body-container{
+.content-container{
   display: flex;
   justify-content: space-between;
   gap: 40px;
