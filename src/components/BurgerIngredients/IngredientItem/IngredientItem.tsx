@@ -24,7 +24,7 @@ class IngredientItem extends React.Component<IBurgerIngredientProps> {
             let name;
             switch (type){
                 case 'bun':
-                    name = "Булка"
+                    name = "Булки"
                     break;
                 case 'sauce':
                     name = "Соусы"
@@ -45,7 +45,7 @@ class IngredientItem extends React.Component<IBurgerIngredientProps> {
                     {
                         props.data.filter(item => item.type === props.type)
                             .map(item =>
-                                <li className={`${css.ingredient}`}>
+                                <li className={`${css.ingredient} pb-8`}>
                                     <Counter  count={item.__v} size={"default"}/>
                                     <img src={item.image} alt={`${props.type}`}/>
                                     <p className={`${css.price} text text_type_digits-default`}>

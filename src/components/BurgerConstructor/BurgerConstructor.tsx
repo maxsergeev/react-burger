@@ -1,56 +1,71 @@
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {CSSProperties} from "react";
+import React, {ReactNode} from "react";
 import css from './BurgerConstructor.module.css';
-import IngredientItem from "./IngredientItem/IngredientItem";
+import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {IDataItem} from "../../utils/interfaces";
-import {ETypeIngredient} from "../../utils/enum";
 
-interface IBurgerConstructorProps {
-    style?: CSSProperties;
+interface IBurgerIngredientsProps {
     data: IDataItem[];
 }
 
-class BurgerConstructor extends React.Component<IBurgerConstructorProps> {
-    constructor(props: IBurgerConstructorProps) {
+class BurgerConstructor extends React.Component<IBurgerIngredientsProps> {
+    constructor(props: IBurgerIngredientsProps) {
         super(props);
     }
+  render(){
+      const data = this.props.data;
+      const lastItemData = data[data.length - 1]
+      return (
+          <section className={`${css.section} pt-25`}>
+              <div className={`${css.ingredientsContainer}`}>
+                  <ConstructorElement
+                      type="top"
+                      isLocked={true}
+                      text={`${data[0].name}`}
+                      price={data[0].price}
+                      thumbnail={data[0].image_mobile}
+                      extraClass={`${css.element}`}
+                  />
+                  <div className={`${css.ingredients} custom-scroll`}>
+                      {
+                          data.filter((item) =>
+                              item._id !== data[0]._id &&
+                              item._id !== data[data.length - 1]._id)
+                              .map(item =>
+                                  <div className={css.elementContainer}>
+                                      <DragIcon type="primary" />
+                                      <ConstructorElement
+                                          text={item.name}
+                                          price={item.price}
+                                          thumbnail={item.image_mobile}
+                                          extraClass={`${css.element}`}
+                                      />
+                                  </div>
+                              )
+                      }
+                  </div>
+                  <ConstructorElement
+                      type="bottom"
+                      isLocked={true}
+                      text={`${lastItemData.name}`}
+                      price={lastItemData.price}
+                      thumbnail={lastItemData.image_mobile}
+                      extraClass={`${css.element}`}
+                  />
+              </div>
+              <div className={`${css.orderContainer} pt-10`}>
+                  <div className={`${css.order} pl-7 pr-7`}>
+                      <div className={`${css.totalPrice}`}>
+                          <p className="text text_type_main-large">123</p>
+                          <CurrencyIcon type="primary"/>
+                      </div>
+                      <Button type="primary" size="large" htmlType="button">Оформить заказ</Button>
+                  </div>
+              </div>
 
-    state = {
-        current: '1'
-    }
 
-    setCurrent = (value: string) => {
-        this.setState({ current: value });
-    }
-
-    render(){
-        const data = this.props.data;
-        return (
-            <section className={`${css.container}`}>
-                <div className={`${css.title} pt-10 pb-5`}>
-                    <p className="text text_type_main-large">Соберите бургер</p>
-                </div>
-
-                <div className={`${css.tabs} pb-10`}>
-                    <Tab value="1" active={this.state.current === '1'} onClick={() => this.setCurrent('1')}>
-                        Булки
-                    </Tab>
-                    <Tab value="2" active={this.state.current === '2'} onClick={() => this.setCurrent('2')}>
-                        Соусы
-                    </Tab>
-                    <Tab value="3" active={this.state.current === '3'} onClick={() => this.setCurrent('3')}>
-                        Начинки
-                    </Tab>
-                </div>
-
-                <div className={`${css.tabContent} custom-scroll`}>
-                    <IngredientItem type={ETypeIngredient.BUN} data={data}/>
-                    <IngredientItem type={ETypeIngredient.SAUCE} data={data}/>
-                    <IngredientItem type={ETypeIngredient.MAIN} data={data}/>
-                </div>
-            </section>
-        )
-    }
+          </section>
+      )
+  }
 }
 
 export default BurgerConstructor;

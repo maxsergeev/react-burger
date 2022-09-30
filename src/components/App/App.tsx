@@ -10,8 +10,8 @@ function App() {
         <AppHeader />
         <main className={`${css.content}`}>
             <div className={`${css.contentContainer} pl-5 pr-5`}>
-                <BurgerConstructor data={data}/>
                 <BurgerIngredients data={data}/>
+                <BurgerConstructor data={data}/>
             </div>
         </main>
     </div>
