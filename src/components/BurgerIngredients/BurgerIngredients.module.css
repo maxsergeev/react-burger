@@ -11,7 +11,7 @@
     justify-content: left;
 }
 
-.tabContent{
+.tab_content{
     overflow-y:scroll;
     position:relative;
     height: 700px;

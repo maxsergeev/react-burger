@@ -6,6 +6,7 @@
     align-items: center;
     max-width: 272px;
     width: 100%;
+    cursor: pointer;
 }
 .p{
     text-align: center;
@@ -15,7 +16,7 @@
     gap: 8px;
     composes: p;
 }
-.ingredientType{
+.ingredient_type{
     display: flex;
     flex-wrap: wrap;
     gap: 8px;

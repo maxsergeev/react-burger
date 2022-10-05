@@ -1,3 +1,5 @@
+import {ETypeModal} from "./enum";
+
 export interface IDataItem {
     _id: string;
     name: string;
@@ -11,4 +13,11 @@ export interface IDataItem {
     image_mobile: string;
     image_large: string;
     __v: number;
+}
+
+
+export interface IModalState {
+    isOpen: boolean;
+    type: ETypeModal | "";
+    title?: string;
 }

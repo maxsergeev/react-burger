@@ -8,7 +8,7 @@
 .element{
     max-height: 80px;
 }
-.elementContainer{
+.element_container{
     display: flex;
     align-items: center;
     gap: 8px;
@@ -21,14 +21,14 @@
     overflow-y:scroll;
     gap: 16px;
 }
-.ingredientsContainer{
+.ingredients_container{
     display: flex;
     align-items: center;
     flex-direction: column;
     width: 100%;
     gap: 16px;
 }
-.orderContainer{
+.order_container{
     width: 100%;
 }
 .order{
@@ -37,12 +37,12 @@
     align-items: center;
     gap: 40px;
 }
-.totalPrice{
+.total_price{
     display: flex;
     align-items: center;
     gap: 8px;
 }
-.totalPrice svg {
+.total_price svg {
     width: 36px;
     height: 36px;
 }
