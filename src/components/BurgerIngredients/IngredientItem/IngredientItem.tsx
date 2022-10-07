@@ -1,14 +1,13 @@
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {CSSProperties, Dispatch, SetStateAction} from "react";
+import React, {CSSProperties} from "react";
 import css from './IngredientItem.module.css';
 import {IDataItem, IModalState} from "../../../utils/interfaces";
-import {ETypeModal} from "../../../utils/enum";
 
 interface IBurgerIngredientProps {
     style?: CSSProperties;
     type: string;
     data: IDataItem[];
-    handleModal: ({ type, isOpen, title }: IModalState) => void;
+    handleModal: ({ isOpen }: IModalState) => void;
     handleSetItem:  (item: IDataItem) => void;
 }
 
@@ -31,9 +30,7 @@ const IngredientItem = ({type, data, handleModal, handleSetItem}: IBurgerIngredi
 
     const onClickIngredient = (item: IDataItem) => {
         handleModal({
-            type: ETypeModal.INGREDIENT,
             isOpen: true,
-            title: "Детали ингредиента"
         })
         handleSetItem(item);
     }
@@ -50,7 +47,8 @@ const IngredientItem = ({type, data, handleModal, handleSetItem}: IBurgerIngredi
                             <li className={`${css.ingredient} pb-8`}
                                 key={index}
                                 onClick={() => onClickIngredient(item)}>
-                                <Counter  count={item?.__v} size={"default"}/>
+                                {/* //TODO заглушка на count ингредиента */}
+                                <Counter count={0} size={"default"}/>
                                 <img src={item?.image} alt={`${type}`}/>
                                 <p className={`${css.price} text text_type_digits-default`}>
                                     {item?.price}

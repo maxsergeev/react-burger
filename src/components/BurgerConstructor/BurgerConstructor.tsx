@@ -1,22 +1,35 @@
-import React from "react";
+import React, {useState} from "react";
 import css from './BurgerConstructor.module.css';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {IDataItem, IModalState} from "../../utils/interfaces";
-import {ETypeModal} from "../../utils/enum";
+import {Modal} from "../Modal/Modal";
+import {OrderDetails} from "../Modal/OrderDetails/OrderDetails";
 
 interface IBurgerIngredientsProps {
     data: IDataItem[];
-    handleModal: ({ type, isOpen, title }: IModalState) => void;
 }
 
-const BurgerConstructor = ({data, handleModal}: IBurgerIngredientsProps) => {
-  const lastItemData = data[data.length - 1];
-  const onClickIngredient = () => {
+const BurgerConstructor = ({data}: IBurgerIngredientsProps) => {
+    const lastItemData = data[data.length - 1];
+
+    const [modal, setModal] = useState<IModalState>({
+        isOpen: false,
+    });
+
+    const { isOpen } = modal;
+
+    const handleModal = ({ isOpen }:IModalState) =>{
+        setModal({...modal, isOpen: isOpen });
+    }
+    const handleModalClose = () => {
+        setModal({...modal, isOpen: false });
+    }
+
+    const onClickOrder = () => {
       handleModal({
-          type: ETypeModal.ORDER,
           isOpen: true
       })
-  }
+    }
   return (
       <section className={`${css.section} pt-25`}>
           <div className={`${css.ingredients_container}`}>
@@ -65,12 +78,17 @@ const BurgerConstructor = ({data, handleModal}: IBurgerIngredientsProps) => {
                       type="primary"
                       size="large"
                       htmlType="button"
-                      onClick={onClickIngredient}
+                      onClick={onClickOrder}
                   >
                       Оформить заказ
                   </Button>
               </div>
           </div>
+          {isOpen &&
+              <Modal handleClose={handleModalClose}>
+                  <OrderDetails/>
+              </Modal>
+          }
       </section>
   )
 }
