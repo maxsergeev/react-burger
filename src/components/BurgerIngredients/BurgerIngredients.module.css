@@ -1,0 +1,18 @@
+.container{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+.tabs{
+    display: flex;
+}
+.title{
+    display: flex;
+    justify-content: left;
+}
+
+.tab_content{
+    overflow-y:scroll;
+    position:relative;
+    height: 700px;
+}

@@ -1,0 +1,12 @@
+.menu_item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #8585AD;
+}
+
+.icon{
+    display: flex;
+    align-items: center;
+}
