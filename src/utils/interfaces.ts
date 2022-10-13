@@ -13,7 +13,29 @@ export interface IDataItem {
     __v: number;
 }
 
+export interface IDataOrderPost {
+    ingredients: Array<string>;
+}
+
+export type IGroupData = Record<string, IDataItem[]>
+
+export interface IOrderInfo {
+    name: string;
+    order: {
+        number: number;
+    }
+    success: boolean;
+}
 
 export interface IModalState {
     isOpen: boolean;
+}
+
+export interface IModalOrder extends  IModalState {
+    orderInfo: IOrderInfo;
+}
+
+export interface IIngredientObject {
+    type: string;
+    ingredients: IDataItem[];
 }

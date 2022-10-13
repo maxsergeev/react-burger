@@ -1,28 +1,15 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {CSSProperties, useState} from "react";
+import React, {CSSProperties, useContext, useState} from "react";
 import css from './BurgerIngredients.module.css';
 import IngredientItem from "./IngredientItem/IngredientItem";
 import {IDataItem, IModalState} from "../../utils/interfaces";
-import {ETypeIngredient} from "../../utils/enum";
 import {Modal} from "../Modal/Modal";
 import {IngredientDetails} from "../Modal/IngredientDetails/IngredientDetails";
+import {BurgerContext} from "../../services/BurgerContext";
 
-interface IBurgerConstructorProps {
-    style?: CSSProperties;
-    data: IDataItem[];
-}
 
-const BurgerIngredients = ({ data }:IBurgerConstructorProps) => {
-    const [state, setState] = useState({
-        current: '1'
-    });
-
-    const [modal, setModal] = useState<IModalState>({
-        isOpen: false,
-    });
-
-    const { isOpen } = modal;
-
+const BurgerIngredients = () => {
+    const dataBurger = useContext(BurgerContext);
     const [ingredient, setIngredient] = useState<IDataItem>({
         _id: "",
         name: "",
@@ -37,8 +24,16 @@ const BurgerIngredients = ({ data }:IBurgerConstructorProps) => {
         image_large:  "",
         __v: 0
     });
+    const [state, setState] = useState({
+        current: '1'
+    });
+    const [modal, setModal] = useState<IModalState>({
+        isOpen: false,
+    });
 
-    const setCurrent = (value: string) => {
+    const { isOpen } = modal;
+
+    const setCurrentPage = (value: string) => {
         setState({ current: value });
     }
 
@@ -50,7 +45,7 @@ const BurgerIngredients = ({ data }:IBurgerConstructorProps) => {
         setIngredient(item);
     }
 
-    const onClickIngredient = () => {
+    const getInfoIngredient = () => {
         setModal({...modal, isOpen: true});
     }
 
@@ -61,36 +56,29 @@ const BurgerIngredients = ({ data }:IBurgerConstructorProps) => {
             </div>
 
             <div className={`${css.tabs} pb-10`}>
-                <Tab value="1" active={state.current === '1'} onClick={() => setCurrent('1')}>
+                <Tab value="1" active={state.current === '1'} onClick={() => setCurrentPage('1')}>
                     Булки
                 </Tab>
-                <Tab value="2" active={state.current === '2'} onClick={() => setCurrent('2')}>
+                <Tab value="2" active={state.current === '2'} onClick={() => setCurrentPage('2')}>
                     Соусы
                 </Tab>
-                <Tab value="3" active={state.current === '3'} onClick={() => setCurrent('3')}>
+                <Tab value="3" active={state.current === '3'} onClick={() => setCurrentPage('3')}>
                     Начинки
                 </Tab>
             </div>
 
             <div className={`${css.tab_content} custom-scroll`}>
-                <IngredientItem
-                    type={ETypeIngredient.BUN}
-                    data={data}
-                    handleModal={onClickIngredient}
-                    handleSetItem={handleSetItem}
-                />
-                <IngredientItem
-                    type={ETypeIngredient.SAUCE}
-                    data={data}
-                    handleModal={onClickIngredient}
-                    handleSetItem={handleSetItem}
-                />
-                <IngredientItem
-                    type={ETypeIngredient.MAIN}
-                    data={data}
-                    handleModal={onClickIngredient}
-                    handleSetItem={handleSetItem}
-                />
+                {
+                    dataBurger.map(typeIngredient => (
+                        <IngredientItem
+                            key={typeIngredient.type}
+                            typeIngredient={typeIngredient}
+                            handleModal={getInfoIngredient}
+                            handleSetItem={handleSetItem}
+                        />
+                    ))
+                }
+
             </div>
             {isOpen &&
                 <Modal handleClose={handleModalClose} title={"Детали ингредиента"}>
