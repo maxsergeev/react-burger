@@ -7,8 +7,8 @@ export function getIngredients() {
         .then(res => checkReponse(res))
 }
 
-export async function postOrder(ingredients: IDataOrderPost) {
-    return await fetch(`${_baseURL}/orders`, {
+export function postOrder(ingredients: IDataOrderPost) {
+    return fetch(`${_baseURL}/orders`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

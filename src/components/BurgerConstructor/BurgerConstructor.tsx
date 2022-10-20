@@ -1,97 +1,86 @@
-import React, {useContext, useMemo, useState} from "react";
+import React, {useContext, useMemo, useRef, useState} from "react";
 import css from './BurgerConstructor.module.css';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {IDataItem, IModalOrder} from "../../utils/interfaces";
+import {IDataItem, IModalOrder, IModalState} from "../../utils/interfaces";
 import {Modal} from "../Modal/Modal";
 import {OrderDetails} from "../Modal/OrderDetails/OrderDetails";
-import {BurgerContext, IngredientContext} from "../../services/BurgerContext";
-import {ETypeIngredient} from "../../utils/enum";
-import {postOrder} from "../../api/burgerApi";
+import {useAppDispatch, useAppSelector} from "../../services/hooks";
+import actions from "../../services/actions";
 import {getIngredientsId} from "../../utils/functions";
+import {IngredientItem} from "./IngredientItem";
+import {useDrop} from "react-dnd";
+
+interface IDropItem {
+   item: IDataItem;
+}
 
 const BurgerConstructor = () => {
-    const dataBurger = useContext(BurgerContext);
-    const {ingredientsState, ingredientsDispatcher} = useContext(IngredientContext);
+    const dispatch = useAppDispatch();
+    const data = useAppSelector(store => store.construct.ingredients)
+    const dataBurger = useAppSelector(store => store.ingredients.dataGroup)
+    const bun = useAppSelector(store => store.construct.ingredients.find(item => item.type === 'bun'));
+    const [modal, setModal] = useState<IModalState>({
+        isOpen: false
+    });
 
-    const data = ingredientsState.ingredients;
-    const [modal, setModal] = useState<IModalOrder>({
-        isOpen: false,
-        orderInfo: {
-            name: "",
-            order: {
-                number: 0,
-            },
-            success: false,
+    const [, dropTarget] = useDrop({
+        accept: "ingredients",
+        drop(item: IDropItem) {
+            dispatch(actions.construct.addIngredient(item.item));
         },
     });
 
-    const { isOpen, orderInfo } = modal;
+    const { isOpen } = modal;
 
     const handleModalClose = () => {
         setModal({...modal, isOpen: false });
+        dispatch(actions.orderDetails.resetOrderInfo());
     }
 
     const onClickOrder = () => {
-        postOrder(getIngredientsId(data)).then(r => {
-            setModal({...modal, isOpen: true, orderInfo: r });
-        });
+        dispatch(actions.orderDetails.post(getIngredientsId(data))).then(r => {
+            setModal({...modal, isOpen: true });
+        })
     }
-
-    const handleResetItem = (item: IDataItem) => {
-        if(item.type !== ETypeIngredient.BUN){
-            ingredientsDispatcher({type: 'removeIngredient', payload: item._id });
-            ingredientsDispatcher({type: 'changePrice', payload: ingredientsState.price - item.price})
-        }
-    }
-
-    const ingredients = useMemo(() => {
-        return (
-            data.map((item: IDataItem, index: number) => (
-                    <div className={css.element_container} key={index} onClick={() => handleResetItem(item)}>
-                        <DragIcon type="primary" />
-                        <ConstructorElement
-                            text={item?.name}
-                            price={item?.price}
-                            thumbnail={item?.image_mobile}
-                            extraClass={`${css.element}`}
-                        />
-                    </div>
-                )
-            )
-        )
-    }, [data])
 
     const priceBurger = useMemo(() => {
-        //TODO вынести за пределы компоненты
         let price = 0;
         data.map((item: IDataItem) => {
             price += item.price;
         })
-        price = dataBurger[0]?.ingredients[0].price * 2 + price;
         return price;
     }, [data, dataBurger])
 
     return (
       <section className={`${css.section} pt-25`}>
-          <div className={`${css.ingredients_container}`}>
+          <div className={`${css.ingredients_container}`} ref={dropTarget}>
               {/*TODO// решить порблему с булками, поместить в массив ingredients*/}
               <ConstructorElement
                   type="top"
                   isLocked={true}
-                  text={`${dataBurger[0]?.ingredients[0]?.name}`}
-                  price={dataBurger[0]?.ingredients[0]?.price}
-                  thumbnail={dataBurger[0]?.ingredients[0]?.image_mobile}
+                  text={`${bun?.name || ""}`}
+                  price={Number(bun?.price)}
+                  thumbnail={String(bun?.image_mobile)}
                   extraClass={`${css.element}`}
               />
               <div className={`${css.ingredients} custom-scroll`}>
-                  {ingredients}
+                  {
+                      data.filter(item => item.type !== "bun")
+                          .map((item: IDataItem, index: number) => (
+                                  <IngredientItem
+                                      index={index}
+                                      item={item}
+                                  />
+                              )
+                          )
+                  }
               </div>
               <ConstructorElement
                   type="bottom"
                   isLocked={true}
-                  text={`${dataBurger[0]?.ingredients[0]?.name}`}
-                  price={dataBurger[0]?.ingredients[0]?.price}
-                  thumbnail={dataBurger[0]?.ingredients[0]?.image_mobile}
+                  text={`${bun?.name || ""}`}
+                  price={Number(bun?.price)}
+                  thumbnail={String(bun?.image_mobile)}
                   extraClass={`${css.element}`}
               />
           </div>
@@ -113,7 +102,7 @@ const BurgerConstructor = () => {
           </div>
           {isOpen &&
               <Modal handleClose={handleModalClose}>
-                  <OrderDetails orderInfo={orderInfo}/>
+                  <OrderDetails/>
               </Modal>
           }
       </section>
