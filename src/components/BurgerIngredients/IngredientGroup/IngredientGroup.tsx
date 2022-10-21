@@ -1,21 +1,19 @@
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {CSSProperties, useCallback, useContext, useEffect, useMemo, useState} from "react";
 import css from './IngredientGroup.module.css';
-import {IDataItem, IIngredientObject, IModalState} from "../../../utils/interfaces";
+import {IIngredientObject, IModalState} from "../../../utils/interfaces";
 import {translateIngredientName} from "../../../utils/functions";
-import {useAppDispatch, useAppSelector} from "../../../services/hooks";
-import actions from "../../../services/actions";
+
 import Ingredient from "./Ingredient";
 
 interface IIngredientGroupProps {
     style?: CSSProperties;
     typeIngredient: IIngredientObject;
     handleModal: ({ isOpen }: IModalState) => void;
-    forwardRef: any;
+    forwardRef: (el: HTMLDivElement) => void;
 }
 
 const IngredientGroup = ({typeIngredient, forwardRef, handleModal}: IIngredientGroupProps) => {
-    const dispatch = useAppDispatch();
     const { ingredients, type } = typeIngredient;
 
     return (

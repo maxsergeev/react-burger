@@ -2,8 +2,7 @@ import React from "react";
 import css from './ModalOverlay.module.css'
 
 interface IModalOverlayProps {
-    //TODO any
-    handleClose?:  (e: any) => void;
+    handleClose?:  () => void;
 }
 
 export const ModalOverlay = ({handleClose}: IModalOverlayProps) => {

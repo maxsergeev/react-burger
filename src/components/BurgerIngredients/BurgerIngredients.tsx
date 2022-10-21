@@ -1,5 +1,5 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {useCallback, useRef, useState} from "react";
+import React, {ReactNode, useCallback, useRef, useState} from "react";
 import css from './BurgerIngredients.module.css';
 import IngredientGroup from "./IngredientGroup/IngredientGroup";
 import {IIngredientObject, IModalState} from "../../utils/interfaces";
@@ -48,7 +48,6 @@ const BurgerIngredients = () => {
         let closestDistance = getDistance(closestToTopElement);
         ingredientsRef.current.map((item) => {
             let itemDistance = getDistance(item);
-            console.log(itemDistance, item.getAttribute("data-type"));
             if (itemDistance < closestDistance && itemDistance > 0){
                 closestDistance = itemDistance;
                 closestToTopElement = item;
@@ -79,7 +78,7 @@ const BurgerIngredients = () => {
                 {
                     dataBurger.map((typeIngredient: IIngredientObject, i) => (
                         <IngredientGroup
-                            forwardRef={(el: any) => ingredientsRef.current[i] = el}
+                            forwardRef={(el: HTMLDivElement) => ingredientsRef.current[i] = el}
                             key={typeIngredient.type}
                             typeIngredient={typeIngredient}
                             handleModal={getInfoIngredient}

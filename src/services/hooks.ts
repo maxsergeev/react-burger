@@ -1,7 +1,5 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
-import {IAppDispatch, IRootState } from "./store"
-import {PayloadAction} from "@reduxjs/toolkit";
-import {IDataItem} from "../utils/interfaces";
+import {TAppDispatch, TRootState } from "./store"
 
-export const useAppDispatch = () => useDispatch<IAppDispatch>()
-export const useAppSelector: TypedUseSelectorHook<IRootState> = useSelector;
+export const useAppDispatch = () => useDispatch<TAppDispatch>()
+export const useAppSelector: TypedUseSelectorHook<TRootState> = useSelector;

@@ -7,8 +7,8 @@ const store = configureStore({
         getDefaultMiddleware(),
 })
 
-export type IRootState = ReturnType<typeof store.getState>
-export type IAppDispatch = typeof store.dispatch;
+export type TRootState = ReturnType<typeof store.getState>
+export type TAppDispatch = typeof store.dispatch;
 
 export const dispatch = store.dispatch;
 

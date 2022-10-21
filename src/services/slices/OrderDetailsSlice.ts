@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {postOrder} from "../../api/burgerApi";
-import {IOrderInfo} from "../../utils/interfaces";
+import {IDataOrderPost, IOrderInfo} from "../../utils/interfaces";
 
 export interface IOrderDetailsState {
     postData: IOrderInfo;
@@ -25,7 +25,7 @@ const initialState: IOrderDetailsState = {
 export const extraActions = {
     post: createAsyncThunk(
         "order/post",
-        async (ingredients: any) => await postOrder(ingredients)
+        async (ingredients: IDataOrderPost) => await postOrder(ingredients)
     )
 }
 

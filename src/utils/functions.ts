@@ -5,12 +5,12 @@ export const checkReponse = (res: Response) => {
 };
 
 export const groupData = (data: IDataItem[]) => {
-    let groupData: IGroupData = {
+    const groupData: IGroupData = {
         bun: [],
         main: [],
         sauce: [],
     }
-    let res: IIngredientObject[] = [];
+    const res: IIngredientObject[] = [];
 
     data.forEach(item => {
         groupData[item.type].push(item);

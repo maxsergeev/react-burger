@@ -16,7 +16,7 @@ export const Modal = ({children, title, handleClose}: IModalProps) => {
     const modalRoot = document.getElementById("modal-root")!;
 
     const handleClickEsc = (e: any) => {
-        if(modalRef.current && e.keyCode === 27) {
+        if(modalRef.current && e.key === "Escape") {
             handleClose && handleClose();
         }
     }

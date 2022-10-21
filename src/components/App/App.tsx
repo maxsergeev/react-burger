@@ -19,11 +19,11 @@ function App() {
         dispatch(actions.ingredients.get());
     }, [])
 
-    useEffect(() => {
-        if (bun) {
-            dispatch(actions.construct.addIngredient(bun))
-        }
-    }, [bun])
+    // useEffect(() => {
+    //     if (bun) {
+    //         dispatch(actions.construct.addIngredient(bun))
+    //     }
+    // }, [bun])
 
     return (
     <div className={`${css.app}`}>

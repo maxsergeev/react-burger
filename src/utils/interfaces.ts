@@ -1,3 +1,5 @@
+import {Id} from "@reduxjs/toolkit/dist/query/tsHelpers";
+
 export interface IDataItem {
     _id: string;
     name: string;
@@ -11,6 +13,10 @@ export interface IDataItem {
     image_mobile: string;
     image_large: string;
     __v: number;
+}
+
+export interface IDataItemExtend extends IDataItem {
+    dragId?: string;
 }
 
 export interface IDataOrderPost {
