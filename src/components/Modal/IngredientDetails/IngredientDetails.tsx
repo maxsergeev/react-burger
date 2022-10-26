@@ -1,14 +1,10 @@
 import React from "react";
 import css from './IngredientDetails.module.css'
-import {IDataItem} from "../../../utils/interfaces";
 import {EnergyElement} from "./EnergyElement/EnergyElement";
+import {useAppSelector} from "../../../services/hooks";
 
-interface IIngredientDetailsProps{
-    ingredient: IDataItem;
-}
-
-
-export const IngredientDetails = ({ingredient}: IIngredientDetailsProps) => {
+export const IngredientDetails = () => {
+    const ingredient = useAppSelector(store => store.ingredientDetails)
     return (
         <div className={css.container}>
             <div>

@@ -1,87 +1,118 @@
-import React, {useState} from "react";
+import React, {useContext, useMemo, useRef, useState} from "react";
 import css from './BurgerConstructor.module.css';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {IDataItem, IModalState} from "../../utils/interfaces";
+import {IDataItem, IDataItemExtend, IModalOrder, IModalState} from "../../utils/interfaces";
 import {Modal} from "../Modal/Modal";
 import {OrderDetails} from "../Modal/OrderDetails/OrderDetails";
+import {useAppDispatch, useAppSelector} from "../../services/hooks";
+import actions from "../../services/actions";
+import {getIngredientsId} from "../../utils/functions";
+import {IngredientItem} from "./IngredientItem";
+import {useDrop} from "react-dnd";
+import { v4 as uuid } from 'uuid';
 
-interface IBurgerIngredientsProps {
-    data: IDataItem[];
+interface IDropItem {
+   item: IDataItem;
 }
 
-const BurgerConstructor = ({data}: IBurgerIngredientsProps) => {
-    const lastItemData = data[data.length - 1];
-
+const BurgerConstructor = () => {
+    const dispatch = useAppDispatch();
+    const data = useAppSelector(store => store.construct.ingredients)
+    const dataBurger = useAppSelector(store => store.ingredients.dataGroup)
+    const bun = useAppSelector(store => store.construct.ingredients.find(item => item.type === 'bun'));
     const [modal, setModal] = useState<IModalState>({
-        isOpen: false,
+        isOpen: false
+    });
+
+    const [, dropTarget] = useDrop({
+        accept: "ingredients",
+        drop(item: IDropItem) {
+            dispatch(actions.construct.addIngredient({
+                ...item.item,
+                dragId: uuid(),
+            }));
+        },
     });
 
     const { isOpen } = modal;
 
-    const handleModal = ({ isOpen }:IModalState) =>{
-        setModal({...modal, isOpen: isOpen });
-    }
     const handleModalClose = () => {
         setModal({...modal, isOpen: false });
+        dispatch(actions.orderDetails.resetOrderInfo());
+        dispatch(actions.construct.clearIngredients());
     }
 
     const onClickOrder = () => {
-      handleModal({
-          isOpen: true
-      })
+        if (data.filter(item => item.type === "bun").length > 0) {
+            dispatch(actions.orderDetails.post(getIngredientsId(data))).then(r => {
+                setModal({...modal, isOpen: true });
+            })
+        } else {
+            alert("Нужно выбрать булку=)");
+        }
     }
-  return (
+
+    const priceBurger = useMemo(() => {
+        let price = 0;
+        data.map((item: IDataItem) => {
+            price += item.price;
+        })
+        return price;
+    }, [data, dataBurger])
+
+    return (
       <section className={`${css.section} pt-25`}>
-          <div className={`${css.ingredients_container}`}>
+          <div className={`${css.ingredients_container}`} ref={dropTarget}>
+              {/*TODO// решить порблему с булками, поместить в массив ingredients*/}
+              { bun ?
               <ConstructorElement
                   type="top"
                   isLocked={true}
-                  text={`${data[0]?.name}`}
-                  price={data[0]?.price}
-                  thumbnail={data[0]?.image_mobile}
+                  text={`${bun?.name || ""}\n` + "(верх)"}
+                  price={Number(bun?.price)}
+                  thumbnail={String(bun?.image_mobile)}
                   extraClass={`${css.element}`}
-              />
+              /> : <p className={`${css.p} text text_type_main-default`}>Переместите сюда булку =)</p>
+              }
               <div className={`${css.ingredients} custom-scroll`}>
                   {
-                      data.filter((item) =>
-                          item?._id !== data[0]?._id &&
-                          item?._id !== data[data.length - 1]?._id)
-                          .map((item, index) =>
-                              <div className={css.element_container} key={index}>
-                                  <DragIcon type="primary" />
-                                  <ConstructorElement
-                                      text={item?.name}
-                                      price={item?.price}
-                                      thumbnail={item?.image_mobile}
-                                      extraClass={`${css.element}`}
-                                  />
-                              </div>
+                      data.filter(item => item.type !== "bun").length !== 0 ? (
+                              data.filter(item => item.type !== "bun")
+                                  .map((item: IDataItemExtend, index: number) => (
+                                          <IngredientItem
+                                              key={item.dragId}
+                                              index={index}
+                                              item={item}
+                                          />
+                                      )
+                                  )
                           )
+                       : ( <p className={`${css.p} text text_type_main-default`}>Переместите сюда ингредиент =)</p> )
                   }
               </div>
-              <ConstructorElement
+              { bun && <ConstructorElement
                   type="bottom"
                   isLocked={true}
-                  text={`${lastItemData?.name}`}
-                  price={lastItemData?.price}
-                  thumbnail={lastItemData?.image_mobile}
+                  text={`${bun?.name || ""}\n` + "(низ)"}
+                  price={Number(bun?.price)}
+                  thumbnail={String(bun?.image_mobile)}
                   extraClass={`${css.element}`}
-              />
+                  />}
           </div>
           <div className={`${css.order_container} pt-10`}>
               <div className={`${css.order} pl-7 pr-7`}>
                   <div className={`${css.total_price}`}>
-                      <p className="text text_type_main-large">123</p>
+                      <p className="text text_type_main-large">{priceBurger || 0}</p>
                       <CurrencyIcon type="primary"/>
                   </div>
-                  <Button
-                      type="primary"
-                      size="large"
-                      htmlType="button"
-                      onClick={onClickOrder}
-                  >
-                      Оформить заказ
-                  </Button>
+                      <Button
+                          type="primary"
+                          size="large"
+                          htmlType="button"
+                          onClick={onClickOrder}
+                      >
+                          Оформить заказ
+                      </Button>
               </div>
           </div>
           {isOpen &&
