@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {IDataItem, IDataItemExtend} from "../../utils/interfaces";
+import {IDataItem, IDataItemExtend} from "../types";
 
 export interface IConstructState {
     ingredients: IDataItem[];

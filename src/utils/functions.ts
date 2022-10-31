@@ -1,4 +1,4 @@
-import {IDataItem, IDataOrderPost, IGroupData, IIngredientObject} from "./interfaces";
+import {IDataItem, IDataOrderPost, IGroupData, IIngredientObject} from "../services/slices/main/types";
 
 export const checkReponse = (res: Response) => {
     return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));

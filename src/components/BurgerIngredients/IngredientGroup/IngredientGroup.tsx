@@ -1,7 +1,7 @@
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {CSSProperties, useCallback, useContext, useEffect, useMemo, useState} from "react";
 import css from './IngredientGroup.module.css';
-import {IIngredientObject, IModalState} from "../../../utils/interfaces";
+import {IIngredientObject, IModalState} from "../../../services/slices/main/types";
 import {translateIngredientName} from "../../../utils/functions";
 
 import Ingredient from "./Ingredient";
@@ -9,11 +9,10 @@ import Ingredient from "./Ingredient";
 interface IIngredientGroupProps {
     style?: CSSProperties;
     typeIngredient: IIngredientObject;
-    handleModal: ({ isOpen }: IModalState) => void;
     forwardRef: (el: HTMLDivElement) => void;
 }
 
-const IngredientGroup = ({typeIngredient, forwardRef, handleModal}: IIngredientGroupProps) => {
+const IngredientGroup = ({typeIngredient, forwardRef}: IIngredientGroupProps) => {
     const { ingredients, type } = typeIngredient;
 
     return (
@@ -27,7 +26,6 @@ const IngredientGroup = ({typeIngredient, forwardRef, handleModal}: IIngredientG
                         <Ingredient
                             key={index}
                             item={item}
-                            handleModal={handleModal}
                         />
                     )
                 }

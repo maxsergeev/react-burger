@@ -4,7 +4,7 @@ import imgDone from '../../../images/done.png'
 import {useAppSelector} from "../../../services/hooks";
 
 export const OrderDetails = () => {
-    const orderInfo = useAppSelector(store => store.orderDetails.postData);
+    const orderInfo = useAppSelector(store => store.main.orderDetails.postData);
     return (
         <div className={css.container}>
             <p className={`${css.orderNumber} text text_type_digits-large pt-4 pb-8`}>{orderInfo?.order.number || 0}</p>

@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {getIngredients} from "../../api/burgerApi";
-import {groupData} from "../../utils/functions";
-import {IDataItem, IIngredientObject} from "../../utils/interfaces";
+import {getIngredients} from "../../main/api/api";
+import {groupData} from "../../../../utils/functions";
+import {IDataItem, IIngredientObject} from "../types";
 
 export interface IIngredientState {
     dataGroup: IIngredientObject[];

@@ -11,7 +11,7 @@
 }
 .left{
     display: flex;
-    flex: 0 0 35%;
+    flex: 0 0 37%;
     gap: 8px;
 }
 .center{

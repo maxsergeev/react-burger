@@ -1,0 +1,41 @@
+.container {
+    display: flex;
+    width: 100%;
+    padding-top: 120px;
+    gap: 60px;
+}
+
+.sidebarMenu {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 30%;
+    gap: 80px;
+    width: 100%;
+    max-width: 320px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.activeLink {
+    text-decoration: none;
+    color: #F2F2F3!important;
+}
+
+.menu a {
+    color: #8585AD;
+    text-decoration: none;
+}
+
+.description p {
+    color: #8585AD;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 480px;
+}

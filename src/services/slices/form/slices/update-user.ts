@@ -1,21 +1,21 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {postOrder} from "../../api/burgerApi";
-import {IDataOrderPost, IOrderInfo} from "../../utils/interfaces";
+import {updateUser} from "../api/client";
+import {IGetUser, IUserData} from "../types";
 
-export interface IOrderDetailsState {
-    postData: IOrderInfo;
+export interface IUpdateUserState {
+    data: IGetUser;
     error: boolean;
     fetching: boolean;
     fetched: boolean;
 }
 
-const initialState: IOrderDetailsState = {
-    postData: {
-        name: "",
-        order: {
-            number: 0,
-        },
+const initialState: IUpdateUserState = {
+    data: {
         success: false,
+        user: {
+            email: "",
+            name: "",
+        },
     },
     error: false,
     fetching: false,
@@ -24,40 +24,37 @@ const initialState: IOrderDetailsState = {
 
 export const extraActions = {
     post: createAsyncThunk(
-        "order/post",
-        async (ingredients: IDataOrderPost) => await postOrder(ingredients)
-    )
+        "updateUser/post",
+        async (data: IUserData) => await updateUser(data)
+    ),
 }
 
 const slice = createSlice({
-    name: "orderDetails",
+    name: "updateUser",
     initialState,
-    reducers: {
-        resetOrderInfo: (state) => {
-            state.postData = initialState.postData;
-        }
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(extraActions.post.pending, (state) => {
-                state.postData = initialState.postData;
                 state.fetching = true;
                 state.fetched = false;
+                state.error = false;
             })
             .addCase(extraActions.post.fulfilled, (state, action) => {
-                state.postData = action.payload;
+                state.data = { ...action.payload }
                 state.fetching = false;
                 state.fetched = true;
+                state.error = false;
             })
             .addCase(extraActions.post.rejected, (state) => {
-                state.fetching = false;
+                state.error = true;
             })
     }
 })
 
 export const actions = {
     ...slice.actions,
-    ...extraActions,
+    ...extraActions
 }
 
 export default slice;
