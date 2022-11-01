@@ -13,27 +13,15 @@ interface IProtectedRoute {
 }
 
 export function ProtectedRoute({ children, path, exact }:IProtectedRoute) {
-    const dispatch = useAppDispatch();
-    const user = useAppSelector(store => store.form.getUser.data);
     const token = getCookie('token');
-    const refreshToken = localStorage.getItem('refreshToken');
-
-    useEffect(() => {
-        if (!token && refreshToken) {
-            dispatch(actions.refreshToken.post())
-                .then(() => dispatch(actions.getUser.post()));
-        }
-        if (token && refreshToken) {
-            dispatch(actions.getUser.post());
-        }
-    }, [dispatch, refreshToken, token]);
+    const location = useLocation();
 
     return (
         <Route
             path={path}
-            exact={exact ? exact : false}
-            render={({location}) => (
-                user.success ?
+            exact={exact || false}
+            render={() => (
+                token ?
                     children :
                     <Redirect to={{pathname: '/login', state: { from: location }}} />
             )

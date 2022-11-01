@@ -1,9 +1,10 @@
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {SyntheticEvent, useCallback, useState} from "react";
+import React, {ChangeEvent, SyntheticEvent, useCallback, useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../services/hooks";
 import actions from "../../../services/slices/form/actions";
 import {IAuthData} from "../../../services/slices/form/types";
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
+import {ILocation} from "../../../services/types";
 
 export const LoginForm = () => {
     const [value, setValue] = useState<IAuthData>({
@@ -12,31 +13,39 @@ export const LoginForm = () => {
     })
     const dispatch = useAppDispatch();
     const history = useHistory();
-    const onChange = (e: any) => {
+    const location = useLocation<ILocation>();
+
+    useEffect(() => {
+        localStorage.removeItem('mail-send');
+    }, [])
+
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setValue({
             ...value,
             [e.target.name] : e.target.value,
         })
     }
 
-    let handleLogin = useCallback((e: SyntheticEvent, value: IAuthData) => {
+    const handleLogin = useCallback((e: SyntheticEvent, value: IAuthData) => {
         e.preventDefault();
         dispatch(actions.login.post(value))
             .then(() => {
                 dispatch(actions.getUser.post());
-                history.replace("/");
+                history.replace(location.state?.from || '/');
             })
     }, [])
 
 
     return (
         <>
-            <p className="text text_type_main-medium">Вход</p>
-            <EmailInput onChange={onChange} value={value.email} name={'email'} />
-            <PasswordInput onChange={onChange} value={value.password} name={'password'} />
-            <Button type="primary" size="large" htmlType="button" onClick={(e) => handleLogin(e, value)}>
-                <p className="text text_type_main-default">Войти</p>
-            </Button>
+            <form onSubmit={(e) => handleLogin(e, value)}>
+                <p className="text text_type_main-medium">Вход</p>
+                <EmailInput onChange={onChange} value={value.email} name={'email'} />
+                <PasswordInput onChange={onChange} value={value.password} name={'password'} />
+                <Button type="primary" size="large" htmlType="submit" >
+                    <p className="text text_type_main-default">Войти</p>
+                </Button>
+            </form>
         </>
     )
 }

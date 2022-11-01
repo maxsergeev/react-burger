@@ -85,7 +85,7 @@ export function getUser() {
         headers: {
             'Accept' : 'application/json',
             'Content-type' : 'application/json',
-            'Authorization': 'Bearer ' + `${getCookie('token')}`,
+            'Authorization': `Bearer ${getCookie('token')}`,
         },
     }
 
@@ -100,7 +100,7 @@ export function updateUser(data: IUserData) {
         headers: {
             'Accept' : 'application/json',
             'Content-type' : 'application/json',
-            'Authorization': 'Bearer ' + `${getCookie('token')}`,
+            'Authorization': `Bearer ${getCookie('token')}`,
         },
         body: JSON.stringify(data),
     }

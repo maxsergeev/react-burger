@@ -10,8 +10,7 @@ interface IAppHeaderProps {
     exact?: boolean;
 }
 
-const HeaderMenuItem = (props:IAppHeaderProps) =>  {
-    const { menuItemName, icon, active, link, exact = true } = props;
+const HeaderMenuItem = ({ menuItemName, icon, active, link, exact = true }:IAppHeaderProps) =>  {
     return (
         <NavLink exact={exact} activeClassName={css.activeLink} to={link} className={`${css.menu_item} pl-5 pr-5 pt-4 pb-4`}>
             <div className={`text text_type_main-default ${css.icon}`}>{icon}</div>

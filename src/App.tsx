@@ -3,12 +3,14 @@ import AppHeader from "./components/Header/AppHeader";
 import css from './App.module.css'
 import {ForgotPass, Ingredients, Login, NotFound404, Profile, Register, ResetPass} from './pages';
 import {ProtectedRoute} from "./components/ProtectedRoute/ProtectedRoute";
-import actions, { actions as mainActions } from "./services/slices/main/actions";
-import {useAppDispatch} from "./services/hooks";
+import { actions as mainActions } from "./services/slices/main/actions";
+import {useAppDispatch, useAppSelector} from "./services/hooks";
 import {Route, Switch, useHistory, useLocation} from "react-router-dom";
 import {Modal} from "./components/Modal/Modal";
 import {IngredientDetails} from "./components/Modal/IngredientDetails/IngredientDetails";
 import {ILocation} from "./services/types";
+import {getCookie} from "./utils/cookie";
+import { actions as formActions} from "./services/slices/form/actions";
 
 function App() {
     const dispatch = useAppDispatch();
@@ -16,18 +18,31 @@ function App() {
     const history = useHistory();
     const background = location.state?.background;
 
+    const user = useAppSelector(store => store.form.getUser.data);
+    const token = getCookie('token');
+    const storageToken = localStorage.getItem('refreshToken');
+
     useEffect(() => {
         dispatch(mainActions.ingredients.get());
     }, [])
 
+    useEffect(() => {
+        if (!token && storageToken) {
+            dispatch(formActions.refreshToken.post())
+                .then(() => dispatch(formActions.getUser.post()));
+        }
+        if (token && storageToken) {
+            dispatch(formActions.getUser.post());
+        }
+    }, [dispatch, storageToken, token]);
 
     const closeIngredientsModal = useCallback(() => {
-        dispatch(actions.modals.closeIngredientModal());
-        history.replace('/');
+        dispatch(mainActions.modals.closeIngredientModal());
+        history.push('/');
     }, [dispatch])
 
     return (
-            <div className={`${css.app}`}>
+            <div className={css.app}>
                 <AppHeader />
                 <main className={`${css.content}`}>
                     <div className={`${css.content_container} pl-5 pr-5 pb-10`}>

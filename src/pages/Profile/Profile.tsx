@@ -1,29 +1,47 @@
 import css from './Profile.module.css'
-import {SyntheticEvent, useEffect, useState} from "react";
+import {ChangeEvent, SyntheticEvent, useEffect, useMemo, useState} from "react";
 import {Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import {NavLink, useHistory} from 'react-router-dom';
+import {NavLink, Route, Switch, useHistory, useLocation} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../services/hooks";
 import actions from "../../services/slices/form/actions";
 import {IUpdateUser} from "../../services/slices/form/types";
+import {Orders} from "../Orders/Orders";
+import { ILocation } from '../../services/types';
 
 export const Profile = () => {
-    const [form, setForm] = useState<IUpdateUser>({
+    const [initialState, setInitialState] = useState<IUpdateUser>({
         name: "",
         email: "",
         password: "",
     })
-    const { name, email } = useAppSelector( store => store.form.getUser.data.user);
+    const [form, setForm] = useState<IUpdateUser>(initialState);
+    const [hasChanged, setChanged] = useState<boolean>(false);
     const dispatch = useAppDispatch();
     const history = useHistory();
+    const location = useLocation<ILocation>();
+    const background = location.state?.background;
 
     useEffect(() => {
-        dispatch(actions.getUser.post());
-        setForm({ name: name, email: email, password: ""});
+        dispatch(actions.getUser.post()).then((res) => {
+            setForm({ ...form, name: res.payload.user.name, email: res.payload.user.email });
+            setInitialState({ ...initialState, name: res.payload.user.name, email: res.payload.user.email })
+        });
     }, [dispatch])
 
-    const onChange = (e: any) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setForm({...form, [e.target.name] : e.target.value});
     }
+    useEffect(() => {
+        if(initialState.name !== form.name ||
+            initialState.email !== form.email ||
+            initialState.password !== form.password
+        ){
+            setChanged(true);
+        }else{
+            setChanged(false);
+        }
+    }, [form])
+
 
     const handleLogout = () => {
         dispatch(actions.getUser.resetUser());
@@ -34,11 +52,16 @@ export const Profile = () => {
     }
 
     const handleSave = (form: IUpdateUser) => {
-        dispatch(actions.updateUser.post(form))
+        dispatch(actions.updateUser.post(form)).then(() => {
+            alert('Ваши космо-данные успешно изменены!');
+            setInitialState(form);
+            setChanged(false);
+        });
     }
 
     const handleCancel = () => {
-        setForm({...form, email: email, name: name})
+        setForm({...form, email: initialState.email, name: initialState.name, password: ""});
+        setChanged(false);
     }
 
     return (
@@ -76,29 +99,42 @@ export const Profile = () => {
                     </p>
                 </div>
             </div>
-            <div className={css.userInfo}>
-                <Input
-                    onChange={onChange}
-                    value={form.name}
-                    name={'name'}
-                    placeholder="Имя"
-                />
-                <Input
-                    onChange={onChange}
-                    value={form.email}
-                    name={'email'}
-                    placeholder="Логин"
-                />
-                <Input
-                    onChange={onChange}
-                    value={form.password}
-                    name={'password'}
-                    placeholder="Пароль"
-                    type="password"
-                />
-                <Button htmlType="button" size="medium" onClick={() => handleSave(form)}>Сохранить</Button>
-                <Button htmlType="button" size="medium" onClick={() => handleCancel()}>Отменить</Button>
-            </div>
+            <Switch location={background || location}>
+                <Route path="/profile/orders" exact>
+                    <Orders />
+                </Route>
+                <Route exact path="/profile">
+                    <div className={css.userInfo}>
+                        <Input
+                            onChange={(e) => onChange(e)}
+                            value={form.name}
+                            name={'name'}
+                            placeholder="Имя"
+                        />
+                        <Input
+                            onChange={(e) => onChange(e)}
+                            value={form.email}
+                            name={'email'}
+                            placeholder="Логин"
+                        />
+                        <Input
+                            onChange={(e) => onChange(e)}
+                            value={form.password}
+                            name={'password'}
+                            placeholder="Пароль"
+                            type="password"
+                            autoComplete="off"
+                        />
+                        { hasChanged &&
+                            <>
+                                <Button htmlType="button" size="medium" onClick={() => handleSave(form)}>Сохранить</Button>
+                                <Button htmlType="button" size="medium" onClick={() => handleCancel()}>Отменить</Button>
+                            </>
+                        }
+                    </div>
+                </Route>
+            </Switch>
+
         </div>
     )
 }

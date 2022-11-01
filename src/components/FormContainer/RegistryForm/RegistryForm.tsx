@@ -29,14 +29,14 @@ export const RegistryForm = () => {
             });
     }
     return (
-        <>
+        <form onSubmit={(e) => handleRegister(e)}>
             <p className="text text_type_main-medium">Регистрация</p>
             <Input onChange={onFormChange} value={value.name} name={'name'} placeholder={"Имя"}/>
             <EmailInput onChange={onFormChange} value={value.email} name={'email'} />
             <PasswordInput onChange={onFormChange} value={value.password} name={'password'} />
-            <Button type="primary" size="large" htmlType="submit" onClick={(e) => handleRegister(e)}>
-                <p className="text text_type_main-default">Войти</p>
+            <Button type="primary" size="large" htmlType="submit">
+                <p className="text text_type_main-default">Зарегистрироваться</p>
             </Button>
-        </>
+        </form>
     )
 }
