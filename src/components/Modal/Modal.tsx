@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {SyntheticEvent, useEffect, useRef} from "react";
 import css from './Modal.module.css'
 import {Button, CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ModalTitle } from "./ModalTitle/ModalTitle";
@@ -15,7 +15,7 @@ export const Modal = ({children, title, handleClose}: IModalProps) => {
     const modalRef = useRef<HTMLDivElement>(null);
     const modalRoot = document.getElementById("modal-root")!;
 
-    const handleClickEsc = (e: any) => {
+    const handleClickEsc = (e: {key: string}) => {
         if(modalRef.current && e.key === "Escape") {
             handleClose && handleClose();
         }

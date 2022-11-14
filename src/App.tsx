@@ -18,7 +18,6 @@ function App() {
     const history = useHistory();
     const background = location.state?.background;
 
-    const user = useAppSelector(store => store.form.getUser.data);
     const token = getCookie('token');
     const storageToken = localStorage.getItem('refreshToken');
 
