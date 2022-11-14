@@ -1,9 +1,9 @@
 import css from "./BurgerConstructor.module.css";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {useRef} from "react";
-import {IDataItem} from "../../utils/interfaces";
+import {IDataItem} from "../../services/slices/main/types";
 import {ETypeIngredient} from "../../utils/enum";
-import actions from "../../services/actions";
+import actions from "../../services/slices/main/actions";
 import {useAppDispatch} from "../../services/hooks";
 import {useDrag, useDrop} from "react-dnd";
 

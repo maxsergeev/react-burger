@@ -2,35 +2,19 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {ReactNode, useCallback, useRef, useState} from "react";
 import css from './BurgerIngredients.module.css';
 import IngredientGroup from "./IngredientGroup/IngredientGroup";
-import {IIngredientObject, IModalState} from "../../utils/interfaces";
+import {IIngredientObject, IModalState} from "../../services/slices/main/types";
 import {Modal} from "../Modal/Modal";
 import {IngredientDetails} from "../Modal/IngredientDetails/IngredientDetails";
 import {useAppDispatch, useAppSelector} from "../../services/hooks";
-import actions from "../../services/actions";
+import actions from "../../services/slices/main/actions";
+import store from "../../services/store";
 
 
 const BurgerIngredients = () => {
-    const dispatch = useAppDispatch();
-    const dataBurger = useAppSelector(store => store.ingredients.dataGroup);
+    const dataBurger = useAppSelector(store => store.main.ingredients.dataGroup);
     const ingredientsRef = useRef<HTMLDivElement[]>([]);
     const tabsRef = useRef<HTMLDivElement>(null);
-
     const [currentType, setCurrentType] = useState("bun");
-
-    const [modal, setModal] = useState<IModalState>({
-        isOpen: false,
-    });
-
-    const { isOpen } = modal;
-
-    const handleModalClose = () => {
-        setModal({...modal, isOpen: false});
-        dispatch(actions.ingredientDetails.resetIngredientInfo());
-    }
-
-    const getInfoIngredient = () => {
-        setModal({...modal, isOpen: true});
-    }
 
     const handleTabSelect = (type: string) => {
         setCurrentType(type);
@@ -81,16 +65,10 @@ const BurgerIngredients = () => {
                             forwardRef={(el: HTMLDivElement) => ingredientsRef.current[i] = el}
                             key={typeIngredient.type}
                             typeIngredient={typeIngredient}
-                            handleModal={getInfoIngredient}
                         />
                     ))
                 }
             </div>
-            {isOpen &&
-                <Modal handleClose={handleModalClose} title={"Детали ингредиента"}>
-                    <IngredientDetails />
-                </Modal>
-            }
         </section>
     )
 }

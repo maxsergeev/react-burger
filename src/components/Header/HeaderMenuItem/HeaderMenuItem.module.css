@@ -10,3 +10,12 @@
     display: flex;
     align-items: center;
 }
+
+.activeLink {
+    text-decoration: none;
+    color: #F2F2F3!important;
+}
+
+.activeLink > .icon > svg {
+    fill: #F2F2F3;
+}

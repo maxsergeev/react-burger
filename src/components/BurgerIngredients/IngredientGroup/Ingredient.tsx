@@ -1,20 +1,19 @@
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {CSSProperties, useCallback, useContext, useEffect, useMemo, useState} from "react";
+import React from "react";
 import css from './IngredientGroup.module.css';
-import {IDataItem, IIngredientObject, IModalState} from "../../../utils/interfaces";
-import {translateIngredientName} from "../../../utils/functions";
-import {useAppDispatch, useAppSelector} from "../../../services/hooks";
-import actions from "../../../services/actions";
+import {IDataItem} from "../../../services/slices/main/types";
+import {useAppSelector} from "../../../services/hooks";
 import { useDrag } from "react-dnd";
+import {Link, useLocation} from "react-router-dom";
+import { ILocation } from "../../../services/types";
 
 interface IIngredientProps {
     item: IDataItem;
-    handleModal: ({ isOpen }: IModalState) => void;
 }
 
-export const Ingredient = ({item, handleModal}: IIngredientProps) => {
-    const dispatch = useAppDispatch();
-    const ingredientsCount = useAppSelector(store => store.construct.ingredients)
+export const Ingredient = ({item}: IIngredientProps) => {
+    const ingredientsCount = useAppSelector(store => store.main.construct.ingredients)
+    const location = useLocation<ILocation>();
 
     const [{ opacity }, dragRef] = useDrag({
         type: "ingredients",
@@ -23,14 +22,6 @@ export const Ingredient = ({item, handleModal}: IIngredientProps) => {
             opacity: monitor.isDragging() ? 0.5 : 1
         })
     });
-
-    //TODO вернуть после добавления DnD вместо setItemConstructor
-    const onClickIngredient = (item: IDataItem) => {
-        handleModal({
-            isOpen: true,
-        })
-        dispatch(actions.ingredientDetails.setIngredientInfo(item))
-    }
 
 
     const getCount = (item: IDataItem) => {
@@ -42,20 +33,22 @@ export const Ingredient = ({item, handleModal}: IIngredientProps) => {
     }
 
     return(
-        <li className={`${css.ingredient} pb-8`}
-            onClick={() => onClickIngredient(item)}
-            style={{opacity}}
-            ref={dragRef}
-        >
-            {/* //TODO заглушка на count ингредиента */}
-            <Counter count={getCount(item)} size={"default"}/>
-            <img src={item?.image} alt={`${item.type}`}/>
-            <p className={`${css.price} text text_type_digits-default`}>
-                {item?.price}
-                <CurrencyIcon type="primary" />
-            </p>
-            <p className={`${css.p} text text_type_main-default`}>{item?.name}</p>
-        </li>
+            <li className={`${css.ingredient} pb-8`}
+                style={{opacity}}
+                ref={dragRef}
+            >
+                <Link to={{ pathname: `/ingredients/${item._id}`, state: {background: location}}} style={{ textDecoration: "none" }}>
+
+                <Counter count={getCount(item)} size={"default"}/>
+                <img src={item?.image} alt={`${item.type}`}/>
+                <p className={`${css.price} text text_type_digits-default`}>
+                    {item?.price}
+                    <CurrencyIcon type="primary" />
+                </p>
+                <p className={`${css.p} text text_type_main-default`}>{item?.name}</p>
+                </Link>
+
+            </li>
     )
 }
 

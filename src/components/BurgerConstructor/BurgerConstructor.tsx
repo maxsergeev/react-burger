@@ -1,15 +1,17 @@
 import React, {useContext, useMemo, useRef, useState} from "react";
 import css from './BurgerConstructor.module.css';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {IDataItem, IDataItemExtend, IModalOrder, IModalState} from "../../utils/interfaces";
+import {IDataItem, IDataItemExtend, IModalOrder, IModalState} from "../../services/slices/main/types";
 import {Modal} from "../Modal/Modal";
 import {OrderDetails} from "../Modal/OrderDetails/OrderDetails";
 import {useAppDispatch, useAppSelector} from "../../services/hooks";
-import actions from "../../services/actions";
+import actions from "../../services/slices/main/actions";
 import {getIngredientsId} from "../../utils/functions";
 import {IngredientItem} from "./IngredientItem";
 import {useDrop} from "react-dnd";
 import { v4 as uuid } from 'uuid';
+import {getCookie} from "../../utils/cookie";
+import {useHistory} from "react-router-dom";
 
 interface IDropItem {
    item: IDataItem;
@@ -17,13 +19,12 @@ interface IDropItem {
 
 const BurgerConstructor = () => {
     const dispatch = useAppDispatch();
-    const data = useAppSelector(store => store.construct.ingredients)
-    const dataBurger = useAppSelector(store => store.ingredients.dataGroup)
-    const bun = useAppSelector(store => store.construct.ingredients.find(item => item.type === 'bun'));
-    const [modal, setModal] = useState<IModalState>({
-        isOpen: false
-    });
-
+    const history = useHistory();
+    const data = useAppSelector(store => store.main.construct.ingredients)
+    const dataBurger = useAppSelector(store => store.main.ingredients.dataGroup)
+    const bun = useAppSelector(store => store.main.construct.ingredients.find(item => item.type === 'bun'));
+    const isOpen = useAppSelector(store => store.main.modals.isOpenOrderModal)
+    const token = getCookie('token');
     const [, dropTarget] = useDrop({
         accept: "ingredients",
         drop(item: IDropItem) {
@@ -34,22 +35,25 @@ const BurgerConstructor = () => {
         },
     });
 
-    const { isOpen } = modal;
-
     const handleModalClose = () => {
-        setModal({...modal, isOpen: false });
+        dispatch(actions.modals.closeOrderModal())
         dispatch(actions.orderDetails.resetOrderInfo());
         dispatch(actions.construct.clearIngredients());
     }
 
     const onClickOrder = () => {
-        if (data.filter(item => item.type === "bun").length > 0) {
-            dispatch(actions.orderDetails.post(getIngredientsId(data))).then(r => {
-                setModal({...modal, isOpen: true });
-            })
+        if (token){
+            if (data.filter(item => item.type === "bun").length > 0) {
+                dispatch(actions.orderDetails.post(getIngredientsId(data))).then(r => {
+                    dispatch(actions.modals.openOrderModal())
+                })
+            } else {
+                alert("Нужно выбрать булку=)");
+            }
         } else {
-            alert("Нужно выбрать булку=)");
+            history.push('/login')
         }
+
     }
 
     const priceBurger = useMemo(() => {

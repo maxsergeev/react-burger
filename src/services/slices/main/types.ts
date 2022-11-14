@@ -1,5 +1,3 @@
-import {Id} from "@reduxjs/toolkit/dist/query/tsHelpers";
-
 export interface IDataItem {
     _id: string;
     name: string;
