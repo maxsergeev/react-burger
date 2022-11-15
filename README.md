@@ -57,5 +57,10 @@
 #### Стилизация:
   - Адаптив
 
-
+## Используемый стек:
+  - HTML5/CSS3
+  - React (React-Router v5, React-dnd)
+  - TypeScript
+  - Redux-Toolkit (middleware Redux-Thunk)
+  - UI Library от Я.Практикум (npm i @ya.praktikum/react-developer-burger-ui-components)
 
