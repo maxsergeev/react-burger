@@ -15,7 +15,7 @@ export const Modal = ({children, title, handleClose}: IModalProps) => {
     const modalRef = useRef<HTMLDivElement>(null);
     const modalRoot = document.getElementById("modal-root")!;
 
-    const handleClickEsc = (e: {key: string}) => {
+    const handleClickEsc = (e: KeyboardEvent) => {
         if(modalRef.current && e.key === "Escape") {
             handleClose && handleClose();
         }

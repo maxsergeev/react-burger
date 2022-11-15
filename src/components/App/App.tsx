@@ -1,16 +1,16 @@
 import React, {useCallback, useEffect} from 'react';
-import AppHeader from "./components/Header/AppHeader";
+import AppHeader from "../Header/AppHeader";
 import css from './App.module.css'
-import {ForgotPass, Ingredients, Login, NotFound404, Profile, Register, ResetPass} from './pages';
-import {ProtectedRoute} from "./components/ProtectedRoute/ProtectedRoute";
-import { actions as mainActions } from "./services/slices/main/actions";
-import {useAppDispatch, useAppSelector} from "./services/hooks";
+import {ForgotPass, Ingredients, Login, NotFound404, Profile, Register, ResetPass} from '../../pages';
+import {ProtectedRoute} from "../ProtectedRoute/ProtectedRoute";
+import { actions as mainActions } from "../../services/slices/main/actions";
+import {useAppDispatch, useAppSelector} from "../../services/hooks";
 import {Route, Switch, useHistory, useLocation} from "react-router-dom";
-import {Modal} from "./components/Modal/Modal";
-import {IngredientDetails} from "./components/Modal/IngredientDetails/IngredientDetails";
-import {ILocation} from "./services/types";
-import {getCookie} from "./utils/cookie";
-import { actions as formActions} from "./services/slices/form/actions";
+import {Modal} from "../Modal/Modal";
+import {IngredientDetails} from "../Modal/IngredientDetails/IngredientDetails";
+import {ILocation} from "../../services/types";
+import {getCookie} from "../../utils/cookie";
+import { actions as formActions} from "../../services/slices/form/actions";
 
 function App() {
     const dispatch = useAppDispatch();
