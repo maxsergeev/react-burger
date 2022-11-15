@@ -1,46 +1,61 @@
-# CosmicBurger
+# Космическая Бургерная (StellarBurger)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Это обучающий CRA проект от Я.Практикум (курс React-разработчик)
 
-## Available Scripts
+Чтобы запустить данный проект, необходимо:
+ 1. Сделать git clone https://github.com/maxsergeev/react-burger.git
+ 2. Установить необходимые зависимости npm install
+ 3. Запустить проект npm start
 
-In the project directory, you can run:
+## Реализовано на данный момент:
 
-### `npm start`
+#### Верстка (без адаптива):
+  1. Формы связанные с авторизацией (вход в личный кабинет, формы восстановления пароля, регистрация)
+  2. Профиль пользователя
+  3. Конструктор бургера
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### **Функционал**:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+##### **Redux-Toolkit:**
+  - Данные по детализации ингридиента в модальном окне (IngredientsDetail)
+  - Удаление данных (IngredientsDetail) при закрытии модального окна
+  - Обновление и получение данных модального окна с заказом (OrderDetails)
 
-### `npm test`
+##### **Redux-Thunk:**
+  - API для списка ингридиентов, конструктора
+  - API аутентификации, авторизации, регистрации, восстановления пароля, изменения данных о пользователе на странице профиля обновления и получения токенов
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+##### **React-router:**
+  - Защита маршрутов
+  - Аутентификация, авторизация и регистрация пользователя
+  - Выход пользователя из приложения
+  - Восстановление забытого пароля пользователя
+  - Получение, обновление и удаление токена авторизации
 
-### `npm run build`
+##### **React-dnd:**
+  - Перетаскивание ингридиентов из списка ингридиентов (BurgerIngredients) в конструктор бургера (BurgerConstructor)
+  - Неограниченное количество дропов одного и того же игридиента в праву область
+  - Увеличение счетчика ингридиента при его дропе в конструктор
+  - Сортировка ингридиентов в конструкторе (кроме закрепленных булок сверху и снизу)
+  - Удаление любого добавленного ингридиента в конструктора (без привязки по id)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+##### **Прочий функционал:**
+  - Скролл ингридиентов с переключением активного таба
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## В ближайших апдейтах:
 
-### `npm run eject`
+#### Верстка:
+  - Страница истории заказов
+  - Лента заказов
+  - 404
+  - Карточка детализации заказа
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### React-router:
+  - Маршрутизация страниц История заказов и Лента Заказов
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Стилизация:
+  - Адаптив
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
