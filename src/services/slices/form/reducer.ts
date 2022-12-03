@@ -1,12 +1,12 @@
 import {combineReducers} from "redux";
-import forgotPassword, {IForgotPasswordState} from "./slices/forgot-password";
-import resetPassword, {IResetPasswordState} from "./slices/reset-password";
-import register, {IRegisterState} from "./slices/register";
-import login, {ILoginState} from "./slices/login";
-import logout, {ILogoutState} from "./slices/logout";
-import refreshToken, {IRefreshTokenState} from "./slices/refresh-token";
-import getUser, {IGetUserState} from "./slices/get-user";
-import updateUser, {IUpdateUserState} from "./slices/update-user";
+import forgotPasswordSlice, {IForgotPasswordState} from "./slices/forgotPasswordSlice";
+import resetPasswordSlice, {IResetPasswordState} from "./slices/resetPasswordSlice";
+import registerSlice, {IRegisterState} from "./slices/registerSlice";
+import loginSlice, {ILoginState} from "./slices/loginSlice";
+import logoutSlice, {ILogoutState} from "./slices/logoutSlice";
+import refreshTokenSlice, {IRefreshTokenState} from "./slices/refreshTokenSlice";
+import getUserSlice, {IGetUserState} from "./slices/getUserSlice";
+import updateUserSlice, {IUpdateUserState} from "./slices/updateUserSlice";
 export interface IFormReducer {
     forgotPassword: IForgotPasswordState;
     resetPassword: IResetPasswordState;
@@ -19,14 +19,14 @@ export interface IFormReducer {
 }
 
 const reducer = combineReducers<IFormReducer>({
-    forgotPassword: forgotPassword.reducer,
-    resetPassword: resetPassword.reducer,
-    register: register.reducer,
-    login: login.reducer,
-    logout: logout.reducer,
-    refreshToken: refreshToken.reducer,
-    getUser: getUser.reducer,
-    updateUser: updateUser.reducer,
+    forgotPassword: forgotPasswordSlice.reducer,
+    resetPassword: resetPasswordSlice.reducer,
+    register: registerSlice.reducer,
+    login: loginSlice.reducer,
+    logout: logoutSlice.reducer,
+    refreshToken: refreshTokenSlice.reducer,
+    getUser: getUserSlice.reducer,
+    updateUser: updateUserSlice.reducer,
 })
 
 export default reducer;

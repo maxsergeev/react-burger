@@ -4,13 +4,15 @@ import css from './App.module.css'
 import {ForgotPass, Ingredients, Login, NotFound404, Profile, Register, ResetPass} from '../../pages';
 import {ProtectedRoute} from "../ProtectedRoute/ProtectedRoute";
 import { actions as mainActions } from "../../services/slices/main/actions";
-import {useAppDispatch, useAppSelector} from "../../services/hooks";
-import {Route, Switch, useHistory, useLocation} from "react-router-dom";
+import {useAppDispatch} from "../../services/hooks";
+import {Route, Switch, useHistory, useLocation, useRouteMatch} from "react-router-dom";
 import {Modal} from "../Modal/Modal";
 import {IngredientDetails} from "../Modal/IngredientDetails/IngredientDetails";
 import {ILocation} from "../../services/types";
 import {getCookie} from "../../utils/cookie";
 import { actions as formActions} from "../../services/slices/form/actions";
+import { Feed } from '../../pages/Feed/Feed';
+import { OrderDetailed } from '../OrderDetailed/OrderDetailed';
 
 function App() {
     const dispatch = useAppDispatch();
@@ -20,6 +22,11 @@ function App() {
 
     const token = getCookie('token');
     const storageToken = localStorage.getItem('refreshToken');
+
+    const isOrderDetailed = useRouteMatch<{[id: string]: string} | null>([
+        '/profile/orders/:id',
+        '/feed/:id'
+    ])?.params?.id;
 
     useEffect(() => {
         dispatch(mainActions.ingredients.get());
@@ -36,8 +43,11 @@ function App() {
     }, [dispatch, storageToken, token]);
 
     const closeIngredientsModal = useCallback(() => {
-        dispatch(mainActions.modals.closeIngredientModal());
         history.push('/');
+    }, [dispatch])
+
+    const closeOrderDetailed = useCallback(() => {
+        history.goBack();
     }, [dispatch])
 
     return (
@@ -56,8 +66,17 @@ function App() {
                             <Route path="/ingredients/:id" exact>
                                 <IngredientDetails/>
                             </Route>
+                            <Route path="/feed" component={Feed} exact />
+                            <Route path="/feed/:id" exact>
+                                <div className={css.detailed}>
+                                    <OrderDetailed />
+                                </div>
+                            </Route>
                             <ProtectedRoute path="/profile">
                                 <Profile />
+                            </ProtectedRoute>
+                            <ProtectedRoute path="/profile/orders/:id" exact>
+                                <OrderDetailed />
                             </ProtectedRoute>
                             <Route component={NotFound404} />
                         </Switch>
@@ -65,6 +84,20 @@ function App() {
                             <Route path='/ingredients/:id' exact>
                                 <Modal title='Детали ингредиента' handleClose={closeIngredientsModal}>
                                     <IngredientDetails />
+                                </Modal>
+                            </Route>
+                        )}
+                        {background && isOrderDetailed && (
+                            <ProtectedRoute path='/profile/orders/:id' exact>
+                                <Modal handleClose={closeOrderDetailed}>
+                                    <OrderDetailed />
+                                </Modal>
+                            </ProtectedRoute>
+                        )}
+                        {background && isOrderDetailed && (
+                            <Route path='/feed/:id' exact>
+                                <Modal handleClose={closeOrderDetailed}>
+                                    <OrderDetailed />
                                 </Modal>
                             </Route>
                         )}

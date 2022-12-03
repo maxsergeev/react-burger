@@ -1,8 +1,9 @@
-import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {CSSProperties, useCallback, useContext, useEffect, useMemo, useState} from "react";
+import React, {CSSProperties} from "react";
 import css from './IngredientGroup.module.css';
-import {IIngredientObject, IModalState} from "../../../services/slices/main/types";
+import {IIngredientObject} from "../../../services/slices/main/types";
 import {translateIngredientName} from "../../../utils/functions";
+import { v4 as uuid } from 'uuid';
+
 
 import Ingredient from "./Ingredient";
 
@@ -24,7 +25,7 @@ const IngredientGroup = ({typeIngredient, forwardRef}: IIngredientGroupProps) =>
                 {
                     ingredients.map((item, index) =>
                         <Ingredient
-                            key={index}
+                            key={uuid()}
                             item={item}
                         />
                     )

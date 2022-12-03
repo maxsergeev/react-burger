@@ -6,11 +6,13 @@ import {IDataItem, IIngredientObject} from "../types";
 export interface IModalsState {
     isOpenOrderModal: boolean;
     isOpenIngredientModal: boolean;
+    isOpenOrderDetailedModal: boolean;
 }
 
 const initialState: IModalsState = {
     isOpenOrderModal: false,
     isOpenIngredientModal: false,
+    isOpenOrderDetailedModal: false,
 }
 
 const slice = createSlice({
@@ -28,6 +30,12 @@ const slice = createSlice({
         },
         closeIngredientModal: (state) => {
             state.isOpenIngredientModal = false;
+        },
+        openOrderDetailModal: (state) => {
+            state.isOpenOrderDetailedModal = true;
+        },
+        closeOrderDetailModal: (state) => {
+            state.isOpenOrderDetailedModal = false;
         }
     },
 })

@@ -17,7 +17,7 @@ const AppHeader = () => {
                     <HeaderMenuItem
                         menuItemName="Лента заказов"
                         icon={<ListIcon type="secondary" />}
-                        link='/list'
+                        link='/feed'
                     />
                 </div>
 

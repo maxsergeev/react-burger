@@ -1,7 +1,7 @@
 .container {
     display: flex;
     width: 100%;
-    padding-top: 120px;
+    /*padding-top: 120px;*/
     gap: 60px;
 }
 
@@ -10,6 +10,7 @@
     flex-direction: column;
     flex: 0 0 30%;
     gap: 80px;
+    padding-top: 120px;
     width: 100%;
     max-width: 320px;
 }
@@ -33,9 +34,19 @@
     color: #8585AD;
 }
 
+.feed_list{
+    width: 100%;
+    padding-top: 40px;
+}
 .userInfo {
     display: flex;
     flex-direction: column;
+    padding-top: 120px;
     gap: 24px;
     max-width: 480px;
+}
+.detailed {
+    align-items: center;
+    margin: 0 auto;
+    padding-top: 120px;
 }
