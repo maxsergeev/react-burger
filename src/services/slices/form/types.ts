@@ -1,3 +1,8 @@
+//универсальный интерфейс для данных с форм
+export interface IUnifyFormData{
+    [key: string]: string;
+}
+
 //reset-forgot-password
 export interface IResetPasswordData {
     password: string,

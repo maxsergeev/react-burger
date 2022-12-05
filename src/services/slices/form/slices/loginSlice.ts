@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {loginUser} from "../api/client";
-import {IAuthData, IAuthDataResponse} from "../types";
+import {IAuthData, IAuthDataResponse, IUnifyFormData} from "../types";
 import {setCookie} from "../../../../utils/cookie";
 
 export interface ILoginState {
@@ -28,7 +28,7 @@ const initialState: ILoginState = {
 export const extraActions = {
     post: createAsyncThunk(
         "login/post",
-        async (data: IAuthData) => await loginUser(data)
+        async (data: IUnifyFormData) => await loginUser(data)
     ),
 }
 

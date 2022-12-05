@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import rootReducer from './reducer';
 import {socketMiddleware} from "./middleware/socketMiddleware";
+import { actions } from "./slices/orders/actions";
+import {_wsUrl} from "../api/constants";
 
 const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(socketMiddleware("wss://norma.nomoreparties.space/orders")),
+        getDefaultMiddleware().concat(socketMiddleware(`${_wsUrl}`, actions.orders)),
 })
 
 export type TRootState = ReturnType<typeof store.getState>

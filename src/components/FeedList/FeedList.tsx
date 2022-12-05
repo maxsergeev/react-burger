@@ -17,7 +17,7 @@ export const FeedList = ({ style }: IFeedListProps) => {
         <div className={`${css.feed_list} custom-scroll`} style={style}>
             {
                 orders?.map((orderItem) =>
-                    <Link key={uuid()} to={{ pathname: `${location.pathname}/${orderItem._id}`, state: { background: location } }}>
+                    <Link key={orderItem._id} to={{ pathname: `${location.pathname}/${orderItem._id}`, state: { background: location } }}>
                         <FeedItem item={orderItem} path={location.pathname}/>
                     </Link>
                 )

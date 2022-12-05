@@ -14,7 +14,6 @@ export interface ILocation {
 
 export type TWebSocketActions = CaseReducerActions<{ //тип для вебсокета
     wsInit: CaseReducer<any, PayloadAction<any>>;
-    wsSendMessage: CaseReducer;
     wsConnectionSuccess: CaseReducer;
     wsConnectionClosed: CaseReducer;
     wsConnectionError: CaseReducer;

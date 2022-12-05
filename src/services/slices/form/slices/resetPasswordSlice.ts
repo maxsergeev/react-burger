@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {IFormDataResponse, IResetPasswordData} from "../types";
+import {IFormDataResponse, IUnifyFormData} from "../types";
 import {resetPassword} from "../api/client";
 
 export interface IResetPasswordState {
@@ -23,7 +23,7 @@ const initialState: IResetPasswordState = {
 export const extraActions = {
     post: createAsyncThunk(
         "resetPassword/post",
-        async (data: IResetPasswordData) => await resetPassword(data)
+        async (data: IUnifyFormData) => await resetPassword(data)
     )
 }
 

@@ -36,7 +36,7 @@ export const FeedItem = ({ item, path }: IFeedItemProps) => {
                     {
                         ingredients.map((id: string, i) => {
                             if( i < 5) {
-                                return <IngredientIcon id={id} key={uuid()}/>
+                                return <IngredientIcon id={id} key={id + i}/>
                             }
                             return null;
                         })

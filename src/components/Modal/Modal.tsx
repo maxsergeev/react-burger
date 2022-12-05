@@ -1,9 +1,11 @@
-import React, {SyntheticEvent, useEffect, useRef} from "react";
+import React, {useEffect, useRef} from "react";
 import css from './Modal.module.css'
 import {Button, CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ModalTitle } from "./ModalTitle/ModalTitle";
 import {createPortal} from "react-dom";
 import {ModalOverlay} from "../ModalOverlay/ModalOverlay";
+import {useAppSelector} from "../../services/hooks";
+import Loader from "../../images/loading.gif";
 
 interface IModalProps {
     children: JSX.Element | JSX.Element[];
@@ -14,7 +16,7 @@ interface IModalProps {
 export const Modal = ({children, title, handleClose}: IModalProps) => {
     const modalRef = useRef<HTMLDivElement>(null);
     const modalRoot = document.getElementById("modal-root")!;
-
+    const { fetching, fetched } = useAppSelector(store => store.main.orderDetails);
     const handleClickEsc = (e: KeyboardEvent) => {
         if(modalRef.current && e.key === "Escape") {
             handleClose && handleClose();
@@ -43,7 +45,14 @@ export const Modal = ({children, title, handleClose}: IModalProps) => {
                             <CloseIcon type="primary"/>
                         </Button>
                     </div>
-                    {children}
+                    {!fetching && fetched && children}
+                    {fetching && !fetched &&
+                        <div className={css.loader_container}>
+                            <p className="text text_type_main-medium">Твой космозаказ отправляется на звездную кухню!</p>
+                            <img src={Loader} alt="Загрузка"/>
+                            <p className="text text_type_main-default">Загрузка...</p>
+                        </div>
+                    }
                 </div>
             </div>
         </>

@@ -16,7 +16,7 @@ export const FeedInfo = () => {
                     <ul className={`${css.list_done}`}>
                         {
                             filterOrders.map(order => (
-                                <li className="text text_type_main-medium" key={uuid()}>
+                                <li className="text text_type_main-medium" key={order._id}>
                                     {order.number}
                                 </li>
                             ))
@@ -28,7 +28,7 @@ export const FeedInfo = () => {
                     <ul>
                         {
                             filterOrders.filter(order => order.status === EStatusesOrder.PENDING).map(order => (
-                                <li className="text text_type_main-medium">
+                                <li className="text text_type_main-medium" key={order._id}>
                                     {order.number}
                                 </li>
                             ))

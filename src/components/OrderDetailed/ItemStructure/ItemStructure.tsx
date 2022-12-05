@@ -24,7 +24,7 @@ export const ItemStructure = ({ data }: IItemStructure) => {
     return (
         <ul className="custom-scroll">
             {ingredients && [...new Set(ingredients)].map((item) =>
-                <li className={css.item} key={uuid()}>
+                <li className={css.item} key={item?._id}>
                     <IngredientIcon id={item?.image} />
                     <p className={`${css.name} text text_type_main-default`}>{item?.name}</p>
                     <p className={`${css.price} text text_type_digits-default`}>

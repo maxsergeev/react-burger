@@ -3,7 +3,7 @@ import { TOrder } from "../../../types";
 
 export interface IWsState {
     wsConnected: boolean;
-    error?: Event;
+    hasError?: boolean;
     orders: TOrder[];
     total: number;
     totalToday: number;
@@ -11,6 +11,7 @@ export interface IWsState {
 
 const initialState: IWsState = {
     wsConnected: false,
+    hasError: false,
     orders: [],
     total: 0,
     totalToday: 0,
@@ -24,9 +25,9 @@ const slice = createSlice({
         wsConnectionSuccess: (state) => {
             state.wsConnected = true;
         },
-        wsConnectionError: (state, action: { payload: Event }) => ({
+        wsConnectionError: (state) => ({
             ...state,
-            error: action.payload,
+            hasError: true,
             wsConnected: false,
         }),
         wsConnectionClosed: (state) => ({

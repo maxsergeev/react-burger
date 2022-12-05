@@ -1,43 +1,41 @@
 // socketMiddleware.ts
-import type {Action, Middleware, MiddlewareAPI} from 'redux';
-
+import type { Middleware, MiddlewareAPI} from 'redux';
 import type { TAppDispatch, TRootState } from '../store';
-import actions from "../slices/orders/actions";
+import {TWebSocketActions} from "../types";
 
-export const socketMiddleware = (wsUrl: string): Middleware => {
+export const socketMiddleware = (wsUrl: string, wsActions: TWebSocketActions): Middleware => {
     return ((store: MiddlewareAPI<TAppDispatch, TRootState>) => {
         let socket: WebSocket | null = null;
 
         return next => (action: { type: string, payload: string }) => {
             const { dispatch } = store;
             const { type, payload } = action;
-            if (type === 'orders/wsInit') {
+            if (type === wsActions.wsInit.type) {
                 // объект класса WebSocket
                 socket && socket.close();
-                console.log(payload);
                 socket = new WebSocket(`${wsUrl}${payload}`);
             }
             if (socket) {
 
                 // функция, которая вызывается при открытии сокета
                 socket.onopen = event => {
-                    dispatch(actions.orders.wsConnectionSuccess());
+                    dispatch(wsActions.wsConnectionSuccess());
                 };
 
                 // функция, которая вызывается при ошибке соединения
                 socket.onerror = event => {
-                    dispatch(actions.orders.wsConnectionError(event));
+                    dispatch(wsActions.wsConnectionError());
                 };
 
                 // функция, которая вызывается при получения события от сервера
                 socket.onmessage = event => {
                     const { data } = event;
                     const parseData = JSON.parse(data);
-                    dispatch(actions.orders.wsGetOrders(parseData));
+                    dispatch(wsActions.wsGetOrders(parseData));
                 };
                 // функция, которая вызывается при закрытии соединения
                 socket.onclose = event => {
-                    dispatch(actions.orders.wsConnectionClosed());
+                    dispatch(wsActions.wsConnectionClosed());
                 };
 
                 // if (type === 'WS_SEND_MESSAGE') {

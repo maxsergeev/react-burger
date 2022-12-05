@@ -25,6 +25,7 @@ const BurgerConstructor = () => {
     const bun = useAppSelector(store => store.main.construct.ingredients.find(item => item.type === 'bun'));
     const isOpen = useAppSelector(store => store.main.modals.isOpenOrderModal)
     const token = getCookie('token');
+    const [statusOrder, setStatusOrder] = useState("Офромить заказ");
     const [, dropTarget] = useDrop({
         accept: "ingredients",
         drop(item: IDropItem) {
@@ -44,9 +45,11 @@ const BurgerConstructor = () => {
     const onClickOrder = () => {
         if (token){
             if (data.filter(item => item.type === "bun").length > 0) {
-                dispatch(actions.orderDetails.post(getIngredientsId(data))).then(r => {
-                    dispatch(actions.modals.openOrderModal())
-                })
+                // dispatch(actions.orderDetails.post(getIngredientsId(data))).then(r => {
+                //     dispatch(actions.modals.openOrderModal())
+                // })
+                dispatch(actions.orderDetails.post(getIngredientsId(data)))
+                dispatch(actions.modals.openOrderModal());
             } else {
                 alert("Нужно выбрать булку=)");
             }

@@ -1,6 +1,10 @@
 import {_authURL, _baseURL} from "../../../../api/constants";
 import { request } from "../../../../api/burgerApi";
-import {IAuthData, IForgotPasswordData, IRegisterData, IResetPasswordData, IToken, IUserData} from "../types";
+import {
+    IForgotPasswordData,
+    IRegisterData,
+    IUnifyFormData,
+} from "../types";
 import {getCookie} from "../../../../utils/cookie";
 
 //запрос на восстановление пароля с отправкой email
@@ -18,7 +22,7 @@ export function forgotPassword(data: IForgotPasswordData) {
 }
 
 //запрос на изменение пароля с отправкой пароля и токена
-export function resetPassword(data: IResetPasswordData) {
+export function resetPassword(data: IUnifyFormData) {
     const url = `${_baseURL}/password-reset/reset`;
     const options = {
         method: 'POST',
@@ -46,7 +50,7 @@ export function registerUser(data: IRegisterData) {
     return request({ url, options });
 }
 
-export function loginUser(data: IAuthData) {
+export function loginUser(data: IUnifyFormData) {
     const url = `${_authURL}/login`;
     const options = {
         method: 'POST',
@@ -93,7 +97,7 @@ export function getUser() {
 }
 
 //обновление пользователя
-export function updateUser(data: IUserData) {
+export function updateUser(data: IUnifyFormData) {
     const url = `${_authURL}/user`;
     const options = {
         method: 'PATCH',

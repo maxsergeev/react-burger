@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import AppHeader from "../Header/AppHeader";
+import Header from "../Header/Header";
 import css from './App.module.css'
 import {ForgotPass, Ingredients, Login, NotFound404, Profile, Register, ResetPass} from '../../pages';
 import {ProtectedRoute} from "../ProtectedRoute/ProtectedRoute";
@@ -52,7 +52,7 @@ function App() {
 
     return (
             <div className={css.app}>
-                <AppHeader />
+                <Header />
                 <main className={`${css.content}`}>
                     <div className={`${css.content_container} pl-5 pr-5 pb-10`}>
                         <Switch location={background || location}>

@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {updateUser} from "../api/client";
-import {IGetUser, IUserData} from "../types";
+import {IGetUser, IUnifyFormData} from "../types";
 
 export interface IUpdateUserState {
     data: IGetUser;
@@ -25,7 +25,7 @@ const initialState: IUpdateUserState = {
 export const extraActions = {
     post: createAsyncThunk(
         "updateUser/post",
-        async (data: IUserData) => await updateUser(data)
+        async (data: IUnifyFormData) => await updateUser(data)
     ),
 }
 
