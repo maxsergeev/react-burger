@@ -25,7 +25,7 @@ const IngredientGroup = ({typeIngredient, forwardRef}: IIngredientGroupProps) =>
                 {
                     ingredients.map((item, index) =>
                         <Ingredient
-                            key={uuid()}
+                            key={item._id}
                             item={item}
                         />
                     )
