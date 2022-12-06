@@ -1,32 +1,25 @@
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {ChangeEvent, SyntheticEvent, useCallback, useEffect, useState} from "react";
-import {useAppDispatch, useAppSelector} from "../../../services/hooks";
+import React, {SyntheticEvent, useCallback, useEffect} from "react";
+import {useAppDispatch} from "../../../services/hooks";
 import actions from "../../../services/slices/form/actions";
-import {IAuthData} from "../../../services/slices/form/types";
+import {IUnifyFormData} from "../../../services/slices/form/types";
 import {useHistory, useLocation} from "react-router-dom";
 import {ILocation} from "../../../services/types";
+import {useForm} from "../../../hooks/useForm";
 
 export const LoginForm = () => {
-    const [value, setValue] = useState<IAuthData>({
-        email: "",
-        password: "",
-    })
     const dispatch = useAppDispatch();
     const history = useHistory();
     const location = useLocation<ILocation>();
-
+    const { values, handleChange } = useForm({
+        email: "",
+        password: "",
+    });
     useEffect(() => {
         localStorage.removeItem('mail-send');
     }, [])
 
-    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue({
-            ...value,
-            [e.target.name] : e.target.value,
-        })
-    }
-
-    const handleLogin = useCallback((e: SyntheticEvent, value: IAuthData) => {
+    const handleLogin = useCallback((e: SyntheticEvent, value: IUnifyFormData) => {
         e.preventDefault();
         dispatch(actions.login.post(value))
             .then(() => {
@@ -38,10 +31,10 @@ export const LoginForm = () => {
 
     return (
         <>
-            <form onSubmit={(e) => handleLogin(e, value)}>
+            <form onSubmit={(e) => handleLogin(e, values)}>
                 <p className="text text_type_main-medium">Вход</p>
-                <EmailInput onChange={onChange} value={value.email} name={'email'} />
-                <PasswordInput onChange={onChange} value={value.password} name={'password'} />
+                <EmailInput onChange={handleChange} value={values.email} name={'email'} />
+                <PasswordInput onChange={handleChange} value={values.password} name={'password'} />
                 <Button type="primary" size="large" htmlType="submit" >
                     <p className="text text_type_main-default">Войти</p>
                 </Button>

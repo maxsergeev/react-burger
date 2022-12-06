@@ -1,0 +1,11 @@
+.feed_list{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y:scroll;
+    position:relative;
+    height: 700px;
+}
+.feed_list a {
+    text-decoration: none;
+}

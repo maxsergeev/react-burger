@@ -1,11 +1,11 @@
-import {actions as resetPassword} from "./slices/reset-password";
-import {actions as forgotPassword} from "./slices/forgot-password";
-import {actions as register} from "./slices/register";
-import {actions as refreshToken} from "./slices/refresh-token";
-import {actions as logout} from "./slices/logout";
-import {actions as login} from "./slices/login";
-import {actions as getUser} from "./slices/get-user";
-import {actions as updateUser} from "./slices/update-user";
+import {actions as resetPassword} from "./slices/resetPasswordSlice";
+import {actions as forgotPassword} from "./slices/forgotPasswordSlice";
+import {actions as register} from "./slices/registerSlice";
+import {actions as refreshToken} from "./slices/refreshTokenSlice";
+import {actions as logout} from "./slices/logoutSlice";
+import {actions as login} from "./slices/loginSlice";
+import {actions as getUser} from "./slices/getUserSlice";
+import {actions as updateUser} from "./slices/updateUserSlice";
 
 export interface IFormActions {
     resetPassword: typeof resetPassword;

@@ -1,9 +1,10 @@
 import React from "react";
 import {BurgerIcon, ListIcon, Logo, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import css from './AppHeader.module.css'
+import css from './Header.module.css'
 import HeaderMenuItem from "./HeaderMenuItem/HeaderMenuItem";
+import {Link} from 'react-router-dom';
 
-const AppHeader = () => {
+const Header = () => {
     return (
         <header className={`${css.wrapper}`}>
             <nav className={`${css.container} pt-4 pb-4`}>
@@ -17,12 +18,12 @@ const AppHeader = () => {
                     <HeaderMenuItem
                         menuItemName="Лента заказов"
                         icon={<ListIcon type="secondary" />}
-                        link='/list'
+                        link='/feed'
                     />
                 </div>
 
                 <div className={css.center}>
-                    <Logo />
+                    <Link to="/"><Logo /></Link>
                 </div>
 
                 <div className={css.right}>
@@ -39,4 +40,4 @@ const AppHeader = () => {
     );
 }
 
-export default AppHeader;
+export default Header;

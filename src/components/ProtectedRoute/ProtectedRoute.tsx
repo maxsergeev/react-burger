@@ -5,7 +5,6 @@ import {getCookie} from "../../utils/cookie";
 export const ProtectedRoute:FC<RouteProps & {children?: ReactNode}> = ({ children, path, exact }) => {
     const token = getCookie('token');
     const location = useLocation();
-
     return (
         <Route
             path={path}

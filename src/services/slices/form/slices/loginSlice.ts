@@ -1,21 +1,24 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {updateUser} from "../api/client";
-import {IGetUser, IUserData} from "../types";
+import {loginUser} from "../api/client";
+import {IAuthData, IAuthDataResponse, IUnifyFormData} from "../types";
+import {setCookie} from "../../../../utils/cookie";
 
-export interface IUpdateUserState {
-    data: IGetUser;
+export interface ILoginState {
+    data: IAuthDataResponse;
     error: boolean;
     fetching: boolean;
     fetched: boolean;
 }
 
-const initialState: IUpdateUserState = {
+const initialState: ILoginState = {
     data: {
         success: false,
         user: {
             email: "",
             name: "",
         },
+        accessToken: "",
+        refreshToken: "",
     },
     error: false,
     fetching: false,
@@ -24,13 +27,13 @@ const initialState: IUpdateUserState = {
 
 export const extraActions = {
     post: createAsyncThunk(
-        "updateUser/post",
-        async (data: IUserData) => await updateUser(data)
+        "login/post",
+        async (data: IUnifyFormData) => await loginUser(data)
     ),
 }
 
 const slice = createSlice({
-    name: "updateUser",
+    name: "login",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
@@ -41,6 +44,8 @@ const slice = createSlice({
                 state.error = false;
             })
             .addCase(extraActions.post.fulfilled, (state, action) => {
+                setCookie('token', action.payload.accessToken.split('Bearer ')[1]);
+                localStorage.setItem('refreshToken', action.payload.refreshToken);
                 state.data = { ...action.payload }
                 state.fetching = false;
                 state.fetched = true;

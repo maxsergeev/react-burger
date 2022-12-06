@@ -1,9 +1,5 @@
-import React, {useEffect} from "react";
-import css from "./FormContainer.module.css";
-import {useAppDispatch, useAppSelector} from "../../services/hooks";
-import {Redirect, useLocation} from "react-router-dom";
-import {ILocation} from "../../services/types";
-import actions from "../../services/slices/form/actions";
+import React from "react";
+import css from "./FormContainer.module.css"
 
 interface IFormContainer {
     form: JSX.Element;
