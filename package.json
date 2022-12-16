@@ -18,11 +18,10 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-intersection-observer": "^9.4.0",
-    "react-redux": "^8.0.4",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^5.3.4",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
-    "redux-devtools": "^3.7.0",
     "redux-thunk": "^2.4.1",
     "typescript": "^4.8.4",
     "uuid": "^9.0.0",
@@ -32,7 +31,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress": "./node_modules/.bin/cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -53,8 +53,17 @@
     ]
   },
   "devDependencies": {
+    "@redux-devtools/core": "^3.13.1",
+    "@testing-library/cypress": "^9.0.0",
     "@types/react-router-dom": "^5.3.3",
+    "@types/redux-mock-store": "^1.0.3",
     "@types/uuid": "^8.3.4",
-    "redux-devtools-extension": "^2.13.9"
+    "cypress": "^12.1.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "fetch-mock": "^9.11.0",
+    "jest": "^27.5.1",
+    "node-fetch": "^2.6.7",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-mock-store": "^1.5.4"
   }
 }

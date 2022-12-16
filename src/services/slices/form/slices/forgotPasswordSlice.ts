@@ -9,7 +9,7 @@ export interface IForgotPasswordState {
     fetched: boolean;
 }
 
-const initialState: IForgotPasswordState = {
+export const initialState: IForgotPasswordState = {
     data: {
         success: false,
         message: "",

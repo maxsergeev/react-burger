@@ -9,7 +9,7 @@ export interface IGetUserState {
     fetched: boolean;
 }
 
-const initialState: IGetUserState = {
+export const initialState: IGetUserState = {
     data: {
         success: false,
         user: {
@@ -60,5 +60,4 @@ export const actions = {
     ...slice.actions,
     ...extraActions
 }
-
 export default slice;

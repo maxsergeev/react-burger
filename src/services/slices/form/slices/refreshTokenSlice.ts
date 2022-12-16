@@ -10,7 +10,7 @@ export interface IRefreshTokenState {
     fetched: boolean;
 }
 
-const initialState: IRefreshTokenState = {
+export const initialState: IRefreshTokenState = {
     data: {
         success: true,
         accessToken: "",

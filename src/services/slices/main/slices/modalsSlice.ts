@@ -5,14 +5,10 @@ import {IDataItem, IIngredientObject} from "../types";
 
 export interface IModalsState {
     isOpenOrderModal: boolean;
-    isOpenIngredientModal: boolean;
-    isOpenOrderDetailedModal: boolean;
 }
 
-const initialState: IModalsState = {
+export const initialState: IModalsState = {
     isOpenOrderModal: false,
-    isOpenIngredientModal: false,
-    isOpenOrderDetailedModal: false,
 }
 
 const slice = createSlice({
@@ -25,18 +21,6 @@ const slice = createSlice({
         closeOrderModal: (state) => {
             state.isOpenOrderModal = false;
         },
-        openIngredientModal: (state) => {
-            state.isOpenIngredientModal = true;
-        },
-        closeIngredientModal: (state) => {
-            state.isOpenIngredientModal = false;
-        },
-        openOrderDetailModal: (state) => {
-            state.isOpenOrderDetailedModal = true;
-        },
-        closeOrderDetailModal: (state) => {
-            state.isOpenOrderDetailedModal = false;
-        }
     },
 })
 

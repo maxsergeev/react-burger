@@ -10,7 +10,7 @@ export interface IResetPasswordState {
 }
 
 
-const initialState: IResetPasswordState = {
+export const initialState: IResetPasswordState = {
     data: {
         success: false,
         message: "",

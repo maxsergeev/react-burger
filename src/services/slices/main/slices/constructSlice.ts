@@ -6,7 +6,7 @@ export interface IConstructState {
     price: number;
 }
 
-const initialState: IConstructState = {
+export const initialState: IConstructState = {
     ingredients: [],
     price: 0,
 }
@@ -46,10 +46,7 @@ const slice = createSlice({
                 0,
                 ingredients.splice(action.payload.indexHover + offset, 1)[0]
             );
-            return {
-                ...state,
-                ingredients: [...ingredients]
-            }
+                state.ingredients = [...ingredients];
         }
     },
 })

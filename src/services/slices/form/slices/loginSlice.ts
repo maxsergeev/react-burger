@@ -10,7 +10,7 @@ export interface ILoginState {
     fetched: boolean;
 }
 
-const initialState: ILoginState = {
+export const initialState: ILoginState = {
     data: {
         success: false,
         user: {

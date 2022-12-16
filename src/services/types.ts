@@ -18,7 +18,7 @@ export type TWebSocketActions = CaseReducerActions<{ //тип для вебсо�
     wsConnectionClosed: CaseReducer;
     wsConnectionError: CaseReducer;
     wsGetOrders: CaseReducer<any, PayloadAction<any>>;
-}>;
+}, any>;
 
 export type TOrder = {
     ingredients: string[];
