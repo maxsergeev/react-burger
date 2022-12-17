@@ -1,3 +1,3 @@
-export const _baseURL = 'https://norma.nomoreparties.space/api';
-export const _authURL = `${_baseURL}/auth`;
-export const _wsUrl = 'wss://norma.nomoreparties.space/orders';
+export const BASE_URL = 'https://norma.nomoreparties.space/api';
+export const AUTH_URL = `${BASE_URL}/auth`;
+export const WS_URL = 'wss://norma.nomoreparties.space/orders';
