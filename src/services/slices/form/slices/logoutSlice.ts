@@ -10,7 +10,7 @@ export interface ILogoutState {
     fetched: boolean;
 }
 
-const initialState: ILogoutState = {
+export const initialState: ILogoutState = {
     data: {
         success: false,
         message: "",

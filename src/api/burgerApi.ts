@@ -1,4 +1,4 @@
-import {_baseURL} from "./constants";
+import {BASE_URL} from "./constants";
 import {checkReponse} from "../utils/functions";
 import {IDataOrderPost} from "../services/slices/main/types";
 

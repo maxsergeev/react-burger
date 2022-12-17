@@ -9,7 +9,7 @@ export interface IIngredientDetailsState {
     image_large: string;
 }
 
-const initialState: IIngredientDetailsState = {
+export const initialState: IIngredientDetailsState = {
     name: "",
     calories: 0,
     proteins: 0,

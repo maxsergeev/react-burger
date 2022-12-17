@@ -1,11 +1,11 @@
-import {_baseURL} from "../../../../api/constants";
+import {BASE_URL} from "../../../../api/constants";
 import {IDataOrderPost} from "../types";
 import {request} from "../../../../api/burgerApi";
 import { getCookie } from "../../../../utils/cookie";
 
 //получение ингредиентов
 export function getIngredients() {
-    const url = `${_baseURL}/ingredients`
+    const url = `${BASE_URL}/ingredients`
     return request({
         url: url,
     });
@@ -13,7 +13,7 @@ export function getIngredients() {
 
 //отправка заказа
 export function postOrder (ingredients: IDataOrderPost) {
-    const url = `${_baseURL}/orders`;
+    const url = `${BASE_URL}/orders`;
     const options =  {
         method: 'POST',
         headers: {

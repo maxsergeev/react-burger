@@ -9,7 +9,7 @@ export interface IRegisterState {
     fetched: boolean;
 }
 
-const initialState: IRegisterState = {
+export const initialState: IRegisterState = {
     data: {
         success: false,
         user: {

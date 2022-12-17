@@ -2,12 +2,12 @@ import { configureStore } from '@reduxjs/toolkit'
 import rootReducer from './reducer';
 import {socketMiddleware} from "./middleware/socketMiddleware";
 import { actions } from "./slices/orders/actions";
-import {_wsUrl} from "../api/constants";
+import {WS_URL} from "../api/constants";
 
 const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(socketMiddleware(`${_wsUrl}`, actions.orders)),
+        getDefaultMiddleware().concat(socketMiddleware(`${WS_URL}`, actions.orders)),
 })
 
 export type TRootState = ReturnType<typeof store.getState>

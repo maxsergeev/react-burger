@@ -9,7 +9,7 @@ export interface IWsState {
     totalToday: number;
 }
 
-const initialState: IWsState = {
+export const initialState: IWsState = {
     wsConnected: false,
     hasError: false,
     orders: [],
@@ -32,7 +32,6 @@ const slice = createSlice({
         }),
         wsConnectionClosed: (state) => ({
             ...state,
-            error: undefined,
             wsConnected: false,
         }),
         wsGetOrders: (state, action: { payload: IWsState }) => ({
@@ -40,7 +39,6 @@ const slice = createSlice({
             orders: action.payload.orders,
             total: action.payload.total,
             totalToday: action.payload.totalToday,
-            error: undefined,
         }),
     }
 })

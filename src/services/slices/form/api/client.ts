@@ -1,4 +1,4 @@
-import {_authURL, _baseURL} from "../../../../api/constants";
+import {AUTH_URL, BASE_URL} from "../../../../api/constants";
 import { request } from "../../../../api/burgerApi";
 import {
     IForgotPasswordData,
@@ -9,7 +9,7 @@ import {getCookie} from "../../../../utils/cookie";
 
 //запрос на восстановление пароля с отправкой email
 export function forgotPassword(data: IForgotPasswordData) {
-    const url = `${_baseURL}/password-reset`;
+    const url = `${BASE_URL}/password-reset`;
     const options = {
         method: 'POST',
         headers: {
@@ -23,7 +23,7 @@ export function forgotPassword(data: IForgotPasswordData) {
 
 //запрос на изменение пароля с отправкой пароля и токена
 export function resetPassword(data: IUnifyFormData) {
-    const url = `${_baseURL}/password-reset/reset`;
+    const url = `${BASE_URL}/password-reset/reset`;
     const options = {
         method: 'POST',
         headers: {
@@ -37,7 +37,7 @@ export function resetPassword(data: IUnifyFormData) {
 
 //регистрация нового пользователя
 export function registerUser(data: IRegisterData) {
-    const url = `${_authURL}/register`;
+    const url = `${AUTH_URL}/register`;
     const options = {
         method: 'POST',
         headers: {
@@ -51,7 +51,7 @@ export function registerUser(data: IRegisterData) {
 }
 
 export function loginUser(data: IUnifyFormData) {
-    const url = `${_authURL}/login`;
+    const url = `${AUTH_URL}/login`;
     const options = {
         method: 'POST',
         headers: {
@@ -66,7 +66,7 @@ export function loginUser(data: IUnifyFormData) {
 
 //выход пользователя
 export function logoutUser() {
-    const url = `${_authURL}/logout`;
+    const url = `${AUTH_URL}/logout`;
     const options = {
         method: 'POST',
         headers: {
@@ -83,7 +83,7 @@ export function logoutUser() {
 
 //запрос на пользователя
 export function getUser() {
-    const url = `${_authURL}/user`;
+    const url = `${AUTH_URL}/user`;
     const options = {
         method: 'GET',
         headers: {
@@ -98,7 +98,7 @@ export function getUser() {
 
 //обновление пользователя
 export function updateUser(data: IUnifyFormData) {
-    const url = `${_authURL}/user`;
+    const url = `${AUTH_URL}/user`;
     const options = {
         method: 'PATCH',
         headers: {
@@ -114,7 +114,7 @@ export function updateUser(data: IUnifyFormData) {
 
 //обновление токена
 export function refreshToken() {
-    const url = `${_authURL}/token`;
+    const url = `${AUTH_URL}/token`;
     const options = {
         method: 'POST',
         headers: {

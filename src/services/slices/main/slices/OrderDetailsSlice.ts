@@ -9,7 +9,7 @@ export interface IOrderDetailsState {
     fetched: boolean;
 }
 
-const initialState: IOrderDetailsState = {
+export const initialState: IOrderDetailsState = {
     postData: {
         name: "",
         order: {
